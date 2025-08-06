@@ -1,51 +1,65 @@
 /* GENERAL STYLES */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f5f7fa;
+    background: #f0f4f8;
     color: #333;
+    line-height: 1.6;
 }
 
 /* HEADER */
 header {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
     color: white;
     padding: 60px 20px;
     text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
 }
 
 /* SECTIONS */
 section {
     padding: 40px 20px;
     margin: 20px auto;
-    max-width: 800px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    max-width: 900px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.08);
+}
+
+/* HEADINGS */
+h2 {
+    color: #2a5298;
+    margin-bottom: 15px;
 }
 
 /* PROJECT LINKS */
 a {
-    color: #007acc;
+    color: #0077cc;
     text-decoration: none;
+    font-weight: 600;
 }
 
 a:hover {
     text-decoration: underline;
-}
-
-/* HEADINGS */
-h1, h2 {
-    color: #203a43;
+    color: #004a99;
 }
 
 /* FOOTER */
 footer {
-    background: #203a43;
+    background: #2a5298;
     color: white;
     text-align: center;
-    padding: 20px;
-    margin-top: 40px;
+    padding: 25px;
     font-size: 14px;
+    margin-top: 50px;
+}
+
+/* Contact Info */
+#contact p {
+    margin: 8px 0;
 }
