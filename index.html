@@ -7,6 +7,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
+
+    /* Animation for project cards */
+    .fade-slide-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-slide-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
@@ -46,60 +57,61 @@
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="max-w-6xl mx-auto my-12 scroll-mt-24">
-    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-8">Projects</h2>
+  <section id="projects" class="max-w-6xl mx-auto my-12 scroll-mt-24 px-4">
+    <h2 class="text-3xl font-extrabold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-3 mb-10 select-none">
+      Projects
+    </h2>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
       
       <!-- Blinkit -->
-      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
-        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
-          <img src="PDF/Blinkit.png" alt="Blinkit Dashboard" class="object-contain max-h-full mx-auto" />
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+          <img src="PDF/Blinkit.png" alt="Blinkit Sales Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
-        <h3 class="text-lg font-semibold">Blinkit Sales Dashboard</h3>
-        <p class="text-gray-600 mt-2">Interactive Power BI dashboard showing sales, delivery KPIs, and customer trends.</p>
-        <a href="PDF/Blinkit.pdf" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">View PDF</a>
+        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Blinkit Sales Dashboard</h3>
+        <p class="text-gray-600 mt-3 leading-relaxed">Interactive Power BI dashboard showing sales, delivery KPIs, and customer trends.</p>
+        <a href="PDF/Blinkit.pdf" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">View PDF</a>
       </article>
 
-    <!-- Pizza -->
-      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
-        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
-          <img src="PDF/pizzas.png" alt="Pizza Sales Dashboard" class="object-contain max-h-full mx-auto" />
+      <!-- Pizza -->
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+          <img src="PDF/pizzas.png" alt="Pizza Sales Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
-        <h3 class="text-lg font-semibold">Pizza Sales Dashboard</h3>
-        <p class="text-gray-600 mt-2">Analyzed pizza sales to uncover top-sellers, trends, and customer preferences.</p>
-        <a href="PDF/Pizza.pdf" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">View PDF</a>
+        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Pizza Sales Dashboard</h3>
+        <p class="text-gray-600 mt-3 leading-relaxed">Analyzed pizza sales to uncover top-sellers, trends, and customer preferences.</p>
+        <a href="PDF/Pizza.pdf" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">View PDF</a>
       </article>
-
 
       <!-- COVID -->
-      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
-        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
-          <img src="PDF/covid.webp" alt="COVID-19 Dashboard" class="object-contain max-h-full mx-auto" />
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+          <img src="PDF/covid.webp" alt="COVID-19 Tracker" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
-        <h3 class="text-lg font-semibold">COVID-19 Tracker</h3>
-        <p class="text-gray-600 mt-2">Real-time Power BI dashboard with KPIs, slicers, and global case analysis.</p>
-        <a href="PDF/covid.pdf" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">View PDF</a>
+        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">COVID-19 Tracker</h3>
+        <p class="text-gray-600 mt-3 leading-relaxed">Real-time Power BI dashboard with KPIs, slicers, and global case analysis.</p>
+        <a href="PDF/covid.pdf" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">View PDF</a>
       </article>
 
       <!-- Financial Loan -->
-      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
-        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
-          <img src="PDF/finace.png" alt="Financial Loan Analysis" class="object-contain max-h-full mx-auto" />
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+          <img src="PDF/finace.png" alt="Financial Loan Report" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
-        <h3 class="text-lg font-semibold">Financial Loan Report</h3>
-        <p class="text-gray-600 mt-2">Loan performance analysis with risk evaluation and repayment behavior insights.</p>
-        <a href="PDF/financial loan.pbix" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Download PBIX</a>
+        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Financial Loan Report</h3>
+        <p class="text-gray-600 mt-3 leading-relaxed">Loan performance analysis with risk evaluation and repayment behavior insights.</p>
+        <a href="PDF/financial loan.pbix" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">Download PBIX</a>
       </article>
 
       <!-- Hotel -->
-      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
-        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
-          <img src="PDF/hotel.jpg" alt="Hotel Data Dashboard" class="object-contain max-h-full mx-auto" />
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+          <img src="PDF/hotel.jpg" alt="Hotel Data Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
-        <h3 class="text-lg font-semibold">Hotel Data Dashboard</h3>
-        <p class="text-gray-600 mt-2">Dashboard built in Power BI for hotel occupancy, revenue, and customer insights.</p>
-        <a href="PDF/Hotel Data.pbix" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Download PBIX</a>
+        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Hotel Data Dashboard</h3>
+        <p class="text-gray-600 mt-3 leading-relaxed">Dashboard built in Power BI for hotel occupancy, revenue, and customer insights.</p>
+        <a href="PDF/Hotel Data.pbix" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">Download PBIX</a>
       </article>
 
     </div>
@@ -120,6 +132,23 @@
   <footer class="bg-indigo-900 text-white text-center py-6 mt-12">
     <p>© 2025 Elsayed. Built with ❤ using GitHub Pages.</p>
   </footer>
+
+  <!-- Animation Script -->
+  <script>
+    const cards = document.querySelectorAll('.fade-slide-up');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    cards.forEach((card) => observer.observe(card));
+  </script>
 
 </body>
 </html>
