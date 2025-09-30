@@ -1,104 +1,124 @@
-<!-- PROJECTS (REPLACE YOUR OLD <section id="projects"> WITH THIS) -->
-<section id="projects" class="bg-gray-100 py-16 px-6">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-2xl font-bold mb-8">Projects</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elsayed | Data & Financial Analyst</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-    <div class="grid md:grid-cols-2 gap-8">
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-3">
+      <a href="#" class="text-lg font-bold text-indigo-900">Elsayed</a>
+      <ul class="flex space-x-6 font-medium">
+        <li><a href="#about" class="text-gray-700 hover:text-indigo-600">About</a></li>
+        <li><a href="#projects" class="text-gray-700 hover:text-indigo-600">Projects</a></li>
+        <li><a href="#contact" class="text-gray-700 hover:text-indigo-600">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
+  <!-- HEADER -->
+  <header class="bg-gradient-to-r from-indigo-900 to-yellow-500 text-white text-center py-24 rounded-b-[50px] shadow-lg mt-14">
+    <h1 class="text-4xl font-bold mb-4">Hi, I'm Elsayed</h1>
+    <p class="text-lg max-w-2xl mx-auto">
+      Junior Data & Financial Analyst passionate about transforming data into actionable insights.
+      Skilled in <span class="font-semibold">Excel, SQL, Python, Power BI</span>, and experienced in
+      building financial reports & dashboards that support decision-making.
+    </p>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="max-w-4xl mx-auto my-12 bg-white shadow rounded-2xl p-8 scroll-mt-24">
+    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6">About Me</h2>
+    <p class="text-gray-700 leading-relaxed">
+      I specialize in <strong>data visualization</strong>, <strong>financial reporting</strong>, and
+      <strong>business intelligence</strong>. With hands-on experience in Power BI and SQL, I enjoy solving complex
+      problems, turning raw numbers into meaningful insights, and helping organizations achieve growth.  
+      In addition, I have worked on <strong>financial analysis projects</strong> including loan risk reports,
+      cost analysis, and profitability dashboards.
+    </p>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="max-w-6xl mx-auto my-12 scroll-mt-24">
+    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-8">Projects</h2>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
       <!-- Blinkit -->
-      <article class="bg-white rounded-2xl shadow p-6 flex gap-6 hover:shadow-lg transition">
-        <div class="w-28 h-28 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-white p-3">
-          <img src="PDF/Blinkit.png" alt="Blinkit logo" class="max-w-full max-h-full object-contain" />
+      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
+        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
+          <img src="PDF/Blinkit.png" alt="Blinkit Dashboard" class="object-contain max-h-full mx-auto" />
         </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold">Blinkit Sales Analysis</h3>
-          <p class="text-gray-600 mt-2">In-depth analysis of Blinkit’s sales and delivery KPIs to identify growth opportunities and operational bottlenecks.</p>
-          <div class="mt-4 flex flex-wrap items-center gap-3">
-            <a href="PDF/Blinkit.pdf" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              View PDF
-            </a>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">Power BI</span>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">DAX</span>
-          </div>
-        </div>
+        <h3 class="text-lg font-semibold">Blinkit Sales Dashboard</h3>
+        <p class="text-gray-600 mt-2">Interactive Power BI dashboard showing sales, delivery KPIs, and customer trends.</p>
+        <a href="PDF/Blinkit.pdf" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">View PDF</a>
       </article>
 
       <!-- Pizza -->
-      <article class="bg-white rounded-2xl shadow p-6 flex gap-6 hover:shadow-lg transition">
-        <div class="w-28 h-28 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-3">
-          <img src="PDF/pizza.png" alt="Pizza Dashboard" class="max-w-full max-h-full object-contain" />
+      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
+        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
+          <img src="PDF/pizza.png" alt="Pizza Sales Dashboard" class="object-contain max-h-full mx-auto" />
         </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold">Pizza Sales Dashboard</h3>
-          <p class="text-gray-600 mt-2">Analyzed pizza sales to uncover best-sellers, seasonal effects, and customer preferences. Built with Power BI and DAX.</p>
-          <div class="mt-4 flex flex-wrap items-center gap-3">
-            <a href="PDF/Pizza.pdf" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              View PDF
-            </a>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">Power BI</span>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">DAX</span>
-          </div>
-        </div>
+        <h3 class="text-lg font-semibold">Pizza Sales Dashboard</h3>
+        <p class="text-gray-600 mt-2">Analyzed pizza sales to uncover top-sellers, trends, and customer preferences.</p>
+        <a href="PDF/Pizza.pdf" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">View PDF</a>
       </article>
 
       <!-- COVID -->
-      <article class="bg-white rounded-2xl shadow p-6 flex gap-6 hover:shadow-lg transition">
-        <div class="w-28 h-28 flex items-center justify-center rounded-lg bg-gradient-to-br from-red-50 to-white p-3">
-          <img src="PDF/covid.webp" alt="COVID dashboard" class="max-w-full max-h-full object-contain" />
+      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
+        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
+          <img src="PDF/covid.webp" alt="COVID-19 Dashboard" class="object-contain max-h-full mx-auto" />
         </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold">COVID-19 Dashboard</h3>
-          <p class="text-gray-600 mt-2">Interactive tracking dashboard for cases, recoveries and vaccination metrics — ready for operational monitoring.</p>
-          <div class="mt-4 flex flex-wrap items-center gap-3">
-            <a href="PDF/covid.pdf" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              View PDF
-            </a>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">Power BI</span>
-          </div>
-        </div>
+        <h3 class="text-lg font-semibold">COVID-19 Tracker</h3>
+        <p class="text-gray-600 mt-2">Real-time Power BI dashboard with KPIs, slicers, and global case analysis.</p>
+        <a href="PDF/covid.pdf" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">View PDF</a>
       </article>
 
-      <!-- Financial Loan Analysis (.pbix download) -->
-      <article class="bg-white rounded-2xl shadow p-6 flex gap-6 hover:shadow-lg transition">
-        <div class="w-28 h-28 flex items-center justify-center rounded-lg bg-gradient-to-br from-green-50 to-white p-3">
-          <img src="PDF/finace.png" alt="Financial Loan analysis" class="max-w-full max-h-full object-contain" />
+      <!-- Financial Loan -->
+      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
+        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
+          <img src="PDF/finace.png" alt="Financial Loan Analysis" class="object-contain max-h-full mx-auto" />
         </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold">Financial Loan Analysis</h3>
-          <p class="text-gray-600 mt-2">Loan portfolio analysis and risk insights created in Power BI — focuses on defaults, exposure, and customer segmentation.</p>
-          <div class="mt-4 flex flex-wrap items-center gap-3">
-            <a href="PDF/financial%20loan.pbix" download class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Download PBIX
-            </a>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">Power BI</span>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">Excel</span>
-          </div>
-        </div>
+        <h3 class="text-lg font-semibold">Financial Loan Report</h3>
+        <p class="text-gray-600 mt-2">Loan performance analysis with risk evaluation and repayment behavior insights.</p>
+        <a href="PDF/financial loan.pbix" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Download PBIX</a>
       </article>
 
-      <!-- Hotel Data (.pbix download) -->
-      <article class="bg-white rounded-2xl shadow p-6 flex gap-6 hover:shadow-lg transition">
-        <div class="w-28 h-28 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-50 to-white p-3">
-          <img src="PDF/hotel.jpg" alt="Hotel dashboard" class="max-w-full max-h-full object-contain" />
+      <!-- Hotel -->
+      <article class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition flex flex-col items-center text-center">
+        <div class="w-20 h-20 flex items-center justify-center rounded-lg bg-gradient-to-br from-yellow-50 to-white p-2 mb-4">
+          <img src="PDF/hotel.jpg" alt="Hotel Data Dashboard" class="object-contain max-h-full mx-auto" />
         </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold">Hotel Data Dashboard</h3>
-          <p class="text-gray-600 mt-2">Analysis of bookings, cancellations and occupancy; provides KPIs and operational recommendations for hotel ops.</p>
-          <div class="mt-4 flex flex-wrap items-center gap-3">
-            <a href="PDF/Hotel%20Data.pbix" download class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Download PBIX
-            </a>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">Power BI</span>
-            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">Time Series</span>
-          </div>
-        </div>
+        <h3 class="text-lg font-semibold">Hotel Data Dashboard</h3>
+        <p class="text-gray-600 mt-2">Dashboard built in Power BI for hotel occupancy, revenue, and customer insights.</p>
+        <a href="PDF/Hotel Data.pbix" target="_blank" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Download PBIX</a>
       </article>
 
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="max-w-4xl mx-auto my-12 bg-white shadow rounded-2xl p-8 scroll-mt-24">
+    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6">Contact</h2>
+    <ul class="space-y-4">
+      <li>Email: <a href="mailto:elsayedhawaa@gmail.com" class="text-indigo-600 font-medium hover:underline">elsayedhawaa@gmail.com</a></li>
+      <li>Phone: <a href="tel:+201140116661" class="text-indigo-600 font-medium hover:underline">+20 114 011 6661</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/elsayed-ragab-961aa2239/" target="_blank" class="text-indigo-600 font-medium hover:underline">View Profile</a></li>
+      <li>CV: <a href="cv.pdf" target="_blank" class="text-indigo-600 font-medium hover:underline">Download my CV</a></li>
+    </ul>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-indigo-900 text-white text-center py-6 mt-12">
+    <p>© 2025 Elsayed. Built with ❤ using GitHub Pages.</p>
+  </footer>
+
+</body>
+</html>
