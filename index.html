@@ -1,63 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Elsayed | Data & Financial Analyst</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elsayed Ragab | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <!-- HEADER -->
-  <header>
-    <h1>Hi, I'm Elsayed 👋</h1>
-    <p>
-      Junior Data & Financial Analyst passionate about transforming data
-      into actionable insights and building professional dashboards.
+<body class="bg-gray-50 text-gray-900 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full top-0 left-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold">Elsayed Ragab</h1>
+      <div class="space-x-6">
+        <a href="#about" class="hover:text-blue-600">About Me</a>
+        <a href="#projects" class="hover:text-blue-600">Projects</a>
+        <a href="#contact" class="hover:text-blue-600">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center px-6">
+    <div>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Hi, I'm Elsayed Ragab</h2>
+      <p class="text-lg md:text-xl">Junior Data Analyst & Financial Analyst</p>
+      <p class="mt-2">I create insightful dashboards, financial reports, and data-driven solutions.</p>
+    </div>
+  </section>
+
+  <!-- About Me -->
+  <section id="about" class="max-w-4xl mx-auto px-6 py-16">
+    <h3 class="text-2xl font-bold mb-6">About Me</h3>
+    <p class="text-lg leading-relaxed">
+      I am a Junior Data Analyst and Financial Analyst with experience in creating dashboards, analyzing sales trends, and preparing professional financial reports.
+      I specialize in tools such as Python, Excel, SQL, and Power BI to uncover insights that drive decision-making.  
     </p>
-    <a href="cv.pdf" class="btn" target="_blank" rel="noopener noreferrer">📄 Download CV</a>
-  </header>
+  </section>
 
-  <div class="container">
-    <!-- ABOUT ME -->
-    <section id="about">
-      <h2>About Me</h2>
-      <p>
-        I am a <strong>Data Analyst</strong> with strong skills in <strong>Excel, SQL, and Python</strong>.
-        I also work as a <strong>Financial Analyst</strong>, creating <strong>financial reports</strong>,
-        <strong>dashboards</strong>, and <strong>insightful analysis</strong> to help businesses
-        make data-driven decisions.
-      </p>
-    </section>
+  <!-- Projects -->
+  <section id="projects" class="bg-gray-100 py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <h3 class="text-2xl font-bold mb-10">Projects</h3>
 
-    <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Projects</h2>
-      <ul>
-        <li>
-          <img src="dataset-cover.png" alt="Pizza Sales Dashboard Logo" class="project-logo" />
-          <strong><a href="PDF/pizza.pdf" target="_blank" rel="noopener noreferrer">Pizza Sales Dashboard (Power BI)</a></strong>
-          – Analyzed pizza sales data to reveal top-selling items, sales trends, and customer behavior.
-        </li>
-        <li>
-          <img src="Website-Featured-Images-6400-×-3600-px-3200-×-1800-px-2000x1000.webp" alt="COVID Dashboard Logo" class="project-logo" />
-          <strong><a href="PDF/covid.pdf" target="_blank" rel="noopener noreferrer">COVID-19 Dashboard (Power BI)</a></strong>
-          – Real-time tracking dashboard with KPIs, slicers, and visuals for confirmed cases, deaths, and recoveries.
-        </li>
-      </ul>
-    </section>
+      <div class="grid md:grid-cols-2 gap-10">
+        
+        <!-- Pizza Sales -->
+        <div class="bg-white rounded-2xl shadow p-6">
+          <img src="dataset-cover.png" alt="Pizza Sales Dashboard" class="rounded-lg mb-4">
+          <h4 class="text-xl font-semibold mb-2">Pizza Sales Dashboard</h4>
+          <p>Analyzed pizza sales data (2024-25) to identify customer preferences, top-selling items, and seasonal trends.</p>
+        </div>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>📧 Email: <a href="mailto:elsayedhawaa@gmail.com">elsayedhawaa@gmail.com</a></p>
-      <p>📞 Phone: <a href="tel:+201140116661">+20 114 011 6661</a></p>
-      <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/elsayed-ragab-961aa2239/" target="_blank">linkedin.com/in/elsayed-ragab-961aa2239</a></p>
-    </section>
-  </div>
+        <!-- COVID-19 Dashboard -->
+        <div class="bg-white rounded-2xl shadow p-6">
+          <img src="Website-Featured-Images-6400-×-3600-px-3200-×-1800-px-2000x1000.webp" alt="COVID-19 Dashboard" class="rounded-lg mb-4">
+          <h4 class="text-xl font-semibold mb-2">COVID-19 Dashboard</h4>
+          <p>Built an interactive dashboard tracking COVID-19 cases, recoveries, and vaccination progress worldwide.</p>
+        </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 Elsayed. Built with ❤ using GitHub Pages.</p>
+        <!-- Blinkit -->
+        <div class="bg-white rounded-2xl shadow p-6">
+          <h4 class="text-xl font-semibold mb-2">Blinkit Sales Analysis</h4>
+          <p>Performed an in-depth analysis of Blinkit’s sales data to evaluate performance metrics, customer trends, and operational efficiency.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="max-w-4xl mx-auto px-6 py-16">
+    <h3 class="text-2xl font-bold mb-6">Contact</h3>
+    <p class="mb-2">📧 Email: <a href="mailto:elsayedhawaa@gmail.com" class="text-blue-600 hover:underline">elsayedhawaa@gmail.com</a></p>
+    <p class="mb-2">💼 LinkedIn: <a href="https://www.linkedin.com/in/elsayed-ragab-961aa2239/" target="_blank" class="text-blue-600 hover:underline">View Profile</a></p>
+    <p class="mb-2">📄 CV: <a href="cv.pdf" target="_blank" class="text-blue-600 hover:underline">Download My CV</a></p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6 mt-10">
+    <p>© 2025 Elsayed Ragab. All Rights Reserved.</p>
   </footer>
+
 </body>
 </html>
