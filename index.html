@@ -1,43 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Elsayed | Data & Financial Analyst</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-    /* Animation for project cards */
-    .fade-slide-up {
+    /* Sticky nav background blur on scroll */
+    nav {
+      backdrop-filter: saturate(180%) blur(10px);
+      transition: background-color 0.3s ease;
+      background-color: rgba(255 255 255 / 0.85);
+    }
+    nav.scrolled {
+      background-color: rgba(255 255 255 / 0.95);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Header text fade-in + slide */
+    header h1, header p {
       opacity: 0;
       transform: translateY(20px);
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    header h1 {
+      animation-name: fadeSlideUp;
+      animation-duration: 1s;
+      animation-delay: 0.3s;
+    }
+    header p {
+      animation-name: fadeSlideUp;
+      animation-duration: 1s;
+      animation-delay: 0.6s;
+    }
+    @keyframes fadeSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Project card fade-slide-scale animation */
+    .fade-slide-up {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .fade-slide-up.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+    }
+
+    /* Floating animation for project images */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+    .floating-img {
+      animation: float 4s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Button ripple effect */
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+    .ripple::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,0.4) 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10,10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 1s;
+    }
+    .ripple:active::after {
+      transform: scale(0,0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+
+    /* Focus outline improvements */
+    a:focus-visible, button:focus-visible, article:focus-visible {
+      outline-offset: 3px;
+      outline: 3px solid #fbbf24; /* Tailwind yellow-400 */
+      outline-radius: 0.5rem;
+    }
+
+    /* Footer hover effect */
+    footer p:hover {
+      color: #fbbf24;
+      transition: color 0.3s ease;
+      cursor: default;
     }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-gray-800 font-sans selection:bg-yellow-400 selection:text-indigo-900">
 
   <!-- NAVIGATION -->
-  <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-3">
-      <a href="#" class="text-lg font-bold text-indigo-900">Elsayed</a>
+      <a href="#" class="text-lg font-bold text-indigo-900 select-none">Elsayed</a>
       <ul class="flex space-x-6 font-medium">
-        <li><a href="#about" class="text-gray-700 hover:text-indigo-600">About</a></li>
-        <li><a href="#projects" class="text-gray-700 hover:text-indigo-600">Projects</a></li>
-        <li><a href="#contact" class="text-gray-700 hover:text-indigo-600">Contact</a></li>
+        <li><a href="#about" class="text-gray-700 hover:text-indigo-600 focus-visible:text-indigo-600">About</a></li>
+        <li><a href="#projects" class="text-gray-700 hover:text-indigo-600 focus-visible:text-indigo-600">Projects</a></li>
+        <li><a href="#contact" class="text-gray-700 hover:text-indigo-600 focus-visible:text-indigo-600">Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- HEADER -->
-  <header class="bg-gradient-to-r from-indigo-900 to-yellow-500 text-white text-center py-24 rounded-b-[50px] shadow-lg mt-14">
-    <h1 class="text-4xl font-bold mb-4">Hi, I'm Elsayed</h1>
-    <p class="text-lg max-w-2xl mx-auto">
+  <header class="bg-gradient-to-r from-indigo-900 to-yellow-500 text-white text-center py-24 rounded-b-[50px] shadow-lg mt-14 px-6">
+    <h1 class="text-4xl font-bold mb-4 select-none">Hi, I'm Elsayed</h1>
+    <p class="text-lg max-w-2xl mx-auto leading-relaxed">
       Junior Data & Financial Analyst passionate about transforming data into actionable insights.
       Skilled in <span class="font-semibold">Excel, SQL, Python, Power BI</span>, and experienced in
       building financial reports & dashboards that support decision-making.
@@ -46,7 +138,7 @@
 
   <!-- ABOUT -->
   <section id="about" class="max-w-4xl mx-auto my-12 bg-white shadow rounded-2xl p-8 scroll-mt-24">
-    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6">About Me</h2>
+    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6 select-none">About Me</h2>
     <p class="text-gray-700 leading-relaxed">
       I specialize in <strong>data visualization</strong>, <strong>financial reporting</strong>, and
       <strong>business intelligence</strong>. With hands-on experience in Power BI and SQL, I enjoy solving complex
@@ -65,8 +157,8 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
       
       <!-- Blinkit -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
           <img src="PDF/Blinkit.png" alt="Blinkit Sales Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
         <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Blinkit Sales Dashboard</h3>
@@ -75,8 +167,8 @@
       </article>
 
       <!-- Pizza -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
           <img src="PDF/pizzas.png" alt="Pizza Sales Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
         <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Pizza Sales Dashboard</h3>
@@ -85,8 +177,8 @@
       </article>
 
       <!-- COVID -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
           <img src="PDF/covid.webp" alt="COVID-19 Tracker" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
         <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">COVID-19 Tracker</h3>
@@ -95,8 +187,8 @@
       </article>
 
       <!-- Financial Loan -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
           <img src="PDF/finace.png" alt="Financial Loan Report" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
         <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Financial Loan Report</h3>
@@ -105,8 +197,8 @@
       </article>
 
       <!-- Hotel -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6">
+      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
+        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
           <img src="PDF/hotel.jpg" alt="Hotel Data Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
         </div>
         <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Hotel Data Dashboard</h3>
@@ -119,27 +211,38 @@
 
   <!-- CONTACT -->
   <section id="contact" class="max-w-4xl mx-auto my-12 bg-white shadow rounded-2xl p-8 scroll-mt-24">
-    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6">Contact</h2>
-    <ul class="space-y-4">
-      <li>Email: <a href="mailto:elsayedhawaa@gmail.com" class="text-indigo-600 font-medium hover:underline">elsayedhawaa@gmail.com</a></li>
-      <li>Phone: <a href="tel:+201140116661" class="text-indigo-600 font-medium hover:underline">+20 114 011 6661</a></li>
-      <li>LinkedIn: <a href="https://www.linkedin.com/in/elsayed-ragab-961aa2239/" target="_blank" class="text-indigo-600 font-medium hover:underline">View Profile</a></li>
-      <li>CV: <a href="cv.pdf" target="_blank" class="text-indigo-600 font-medium hover:underline">Download my CV</a></li>
+    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6 select-none">Contact</h2>
+    <ul class="space-y-4 text-lg">
+      <li>Email: <a href="mailto:elsayedhawaa@gmail.com" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">elsayedhawaa@gmail.com</a></li>
+      <li>Phone: <a href="tel:+201140116661" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">+20 114 011 6661</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/elsayed-ragab-961aa2239/" target="_blank" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">View Profile</a></li>
+      <li>CV: <a href="cv.pdf" target="_blank" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">Download my CV</a></li>
     </ul>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-indigo-900 text-white text-center py-6 mt-12">
-    <p>© 2025 Elsayed. Built with ❤ using GitHub Pages.</p>
+  <footer class="bg-indigo-900 text-white text-center py-6 mt-12 select-none">
+    <p>© 2025 Elsayed. Built with <span aria-label="love" role="img">❤</span> using GitHub Pages.</p>
   </footer>
 
   <!-- Animation Script -->
   <script>
+    // Animate nav background on scroll
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 20) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Animate project cards on scroll
     const cards = document.querySelectorAll('.fade-slide-up');
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
             entry.target.classList.add('visible');
             observer.unobserve(entry.target);
           }
@@ -147,7 +250,7 @@
       },
       { threshold: 0.15 }
     );
-    cards.forEach((card) => observer.observe(card));
+    cards.forEach(card => observer.observe(card));
   </script>
 
 </body>
