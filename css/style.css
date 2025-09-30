@@ -10,7 +10,22 @@ body {
     line-height: 1.6;
     scroll-behavior: smooth;
 }
-
+.project-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-right: 15px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(250, 169, 22, 0.3);
+}
+#projects li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
 a {
     color: #1e40af;
     text-decoration: none;
