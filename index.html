@@ -1,268 +1,1128 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Elsayed | Data & Financial Analyst</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elsayed Ragab | Data Analyst & AI Trainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    html {
-      scroll-behavior: smooth;
+    :root {
+      /* Vibrant professional palette */
+      --bg:       #0a0a12;
+      --bg2:      #11111f;
+      --bg3:      #18182c;
+      --surface:  #1e1e38;
+      --surface2: #262650;
+      --surface3: #2e2e60;
+      --border:   rgba(255,255,255,0.06);
+      --border2:  rgba(255,255,255,0.15);
+      --text:     #f5f5ff;
+      --muted:    #8a8ab8;
+      --soft:     #c0c0e0;
+
+      /* Vibrant accent colors */
+      --violet:   #b794f6;
+      --violet2:  #9f7aea;
+      --violet3:  #805ad5;
+      --cyan:     #38bdf8;
+      --cyan2:    #0ea5e9;
+      --rose:     #fb7185;
+      --rose2:    #f43f5e;
+      --amber:    #fbbf24;
+      --amber2:   #f59e0b;
+      --mint:     #4ade80;
+      --mint2:    #22c55e;
+      --peach:    #fb923c;
+      --lavender: #d8b4fe;
+      --indigo:   #818cf8;
+      --teal:     #2dd4bf;
+
+      /* Gradients */
+      --g1: linear-gradient(135deg, var(--violet), var(--cyan));
+      --g2: linear-gradient(135deg, var(--rose), var(--amber));
+      --g3: linear-gradient(135deg, var(--mint), var(--cyan));
+      --g4: linear-gradient(135deg, var(--lavender), var(--violet));
+      --g5: linear-gradient(180deg, transparent, rgba(159,122,234,0.1), transparent);
+      --g6: linear-gradient(90deg, var(--violet), var(--rose), var(--amber), var(--mint), var(--cyan), var(--indigo));
+      --g7: linear-gradient(135deg, var(--indigo), var(--teal));
+      --g8: linear-gradient(135deg, var(--cyan), var(--mint));
     }
 
-    /* Sticky nav background blur on scroll */
-    nav {
-      backdrop-filter: saturate(180%) blur(10px);
-      transition: background-color 0.3s ease;
-      background-color: rgba(255 255 255 / 0.85);
-    }
-    nav.scrolled {
-      background-color: rgba(255 255 255 / 0.95);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    /* Header text fade-in + slide */
-    header h1, header p {
-      opacity: 0;
-      transform: translateY(20px);
-      animation-fill-mode: forwards;
-      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    header h1 {
-      animation-name: fadeSlideUp;
-      animation-duration: 1s;
-      animation-delay: 0.3s;
-    }
-    header p {
-      animation-name: fadeSlideUp;
-      animation-duration: 1s;
-      animation-delay: 0.6s;
-    }
-    @keyframes fadeSlideUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      cursor:none;
+      line-height:1.6;
     }
 
-    /* Project card fade-slide-scale animation */
-    .fade-slide-up {
-      opacity: 0;
-      transform: translateY(20px) scale(0.95);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-slide-up.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+    /* ===== CURSOR ===== */
+    #cur{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:screen;transition:transform .12s,background .25s;box-shadow:0 0 20px var(--cyan)}
+    #cur-r{position:fixed;width:32px;height:32px;border:1.5px solid rgba(183,148,246,.4);border-radius:50%;pointer-events:none;z-index:99998;transition:width .25s,height .25s,border-color .25s}
+
+    /* ===== PROGRESS BAR ===== */
+    #prog{position:fixed;top:0;left:0;height:3px;background:var(--g6);background-size:200% 100%;z-index:10000;width:0;transition:width .1s;animation:gradientShift 3s linear infinite}
+
+    /* ===== CANVAS LAYERS ===== */
+    #c-particles,#c-math,#c-circuit,#c-constellation{position:fixed;inset:0;pointer-events:none}
+    #c-particles{z-index:1;opacity:.6}
+    #c-math{z-index:2;opacity:.15}
+    #c-circuit{z-index:3;opacity:.08}
+    #c-constellation{z-index:2;opacity:.25}
+
+    /* ===== NOISE OVERLAY ===== */
+    .noise{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:.02;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
     }
 
-    /* Floating animation for project images */
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-6px);
-      }
-    }
-    .floating-img {
-      animation: float 4s ease-in-out infinite;
-      will-change: transform;
+    /* ===== VIGNETTE ===== */
+    .vignette{position:fixed;inset:0;z-index:3;pointer-events:none;
+      background:radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0,0,0,0.4) 100%)
     }
 
-    /* Button ripple effect */
-    .ripple {
-      position: relative;
-      overflow: hidden;
-    }
-    .ripple::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      background: radial-gradient(circle, rgba(255,255,255,0.4) 10%, transparent 10.01%);
-      background-repeat: no-repeat;
-      background-position: 50%;
-      transform: scale(10,10);
-      opacity: 0;
-      transition: transform 0.5s, opacity 1s;
-    }
-    .ripple:active::after {
-      transform: scale(0,0);
-      opacity: 0.3;
-      transition: 0s;
-    }
+    /* ===== NAV ===== */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 3rem;
+      display:flex;align-items:center;justify-content:space-between;
+      transition:background .4s,border-color .4s,backdrop-filter .4s;border-bottom:1px solid transparent}
+    nav.sc{background:rgba(10,10,18,.9);backdrop-filter:blur(30px);border-color:var(--border)}
 
-    /* Focus outline improvements */
-    a:focus-visible, button:focus-visible, article:focus-visible {
-      outline-offset: 3px;
-      outline: 3px solid #fbbf24; /* Tailwind yellow-400 */
-      outline-radius: 0.5rem;
-    }
+    .logo{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:4px;color:var(--text);text-decoration:none;
+      background:var(--g1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;position:relative}
+    .logo::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--g1);transition:width .4s;border-radius:2px}
+    .logo:hover::after{width:100%}
 
-    /* Footer hover effect */
-    footer p:hover {
-      color: #fbbf24;
-      transition: color 0.3s ease;
-      cursor: default;
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);text-decoration:none;
+      letter-spacing:1.5px;text-transform:uppercase;transition:color .3s;position:relative;padding:.5rem 0}
+    .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s;border-radius:1px}
+    .nav-links a:hover{color:var(--text)}
+    .nav-links a:hover::after{width:100%}
+    .nav-links a em{color:var(--violet);font-style:normal}
+
+    /* ===== HERO ===== */
+    .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;
+      justify-content:flex-end;padding:0 4rem 6rem;overflow:hidden;z-index:5}
+
+    /* Glowing edge rings - multiple layers */
+    .ring{position:absolute;border-radius:50%;border:1px solid;pointer-events:none}
+    .r1{width:900px;height:900px;border-color:rgba(183,148,246,.1);top:-250px;right:-250px;
+      animation:spin 80s linear infinite;box-shadow:0 0 100px rgba(183,148,246,.05) inset}
+    .r2{width:600px;height:600px;border-color:rgba(56,189,248,.08);top:-50px;right:0px;
+      animation:spin 50s linear infinite reverse}
+    .r3{width:350px;height:350px;border-color:rgba(251,113,133,.12);top:80px;right:150px;
+      animation:spin 25s linear infinite}
+    .r4{width:180px;height:180px;border-color:rgba(74,222,128,.15);top:200px;right:280px;
+      animation:spin 15s linear infinite reverse}
+    .r5{width:120px;height:120px;border-color:rgba(251,146,60,.18);top:280px;right:340px;
+      animation:spin 10s linear infinite}
+    .r6{width:500px;height:500px;border-color:rgba(216,180,254,.06);bottom:-150px;left:-150px;
+      animation:spin 60s linear infinite}
+    .r7{width:280px;height:280px;border-color:rgba(183,148,246,.1);bottom:30px;left:30px;
+      animation:spin 35s linear infinite reverse}
+    .r8{width:140px;height:140px;border-color:rgba(56,189,248,.12);bottom:120px;left:120px;
+      animation:spin 20s linear infinite}
+
+    /* Dashed rings */
+    .ring-dashed{position:absolute;border-radius:50%;border:1px dashed;pointer-events:none}
+    .rd1{width:700px;height:700px;border-color:rgba(183,148,246,.06);top:10%;left:60%;animation:spin 100s linear infinite reverse}
+    .rd2{width:400px;height:400px;border-color:rgba(56,189,248,.08);bottom:20%;left:20%;animation:spin 70s linear infinite}
+
+    /* Glowing blobs */
+    .blob{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px)}
+    .bl1{width:800px;height:800px;background:radial-gradient(circle,rgba(183,148,246,.12),transparent 70%);top:-200px;right:-200px;animation:blobFloat 20s ease-in-out infinite}
+    .bl2{width:500px;height:500px;background:radial-gradient(circle,rgba(56,189,248,.08),transparent 70%);bottom:-100px;left:15%;animation:blobFloat 25s ease-in-out infinite reverse}
+    .bl3{width:350px;height:350px;background:radial-gradient(circle,rgba(251,113,133,.08),transparent 70%);top:35%;left:3%;animation:blobFloat 18s ease-in-out infinite}
+    .bl4{width:300px;height:300px;background:radial-gradient(circle,rgba(74,222,128,.06),transparent 70%);bottom:15%;right:10%;animation:blobFloat 22s ease-in-out infinite reverse}
+    .bl5{width:250px;height:250px;background:radial-gradient(circle,rgba(251,146,60,.07),transparent 70%);top:60%;right:25%;animation:blobFloat 15s ease-in-out infinite}
+
+    /* Floating geometric boxes - rounded */
+    .box{position:absolute;border:1px solid;pointer-events:none;border-radius:12px}
+    .bx1{width:100px;height:100px;border-color:rgba(183,148,246,.2);top:20%;left:5%;animation:floatbox 8s ease-in-out infinite;transform:rotate(15deg)}
+    .bx2{width:55px;height:55px;border-color:rgba(56,189,248,.25);top:50%;left:10%;animation:floatbox 10s ease-in-out infinite reverse;transform:rotate(45deg)}
+    .bx3{width:40px;height:40px;border-color:rgba(251,146,60,.2);top:68%;left:6%;animation:floatbox 7s ease-in-out infinite;transform:rotate(5deg)}
+    .bx4{width:70px;height:70px;border-color:rgba(251,113,133,.18);top:12%;left:22%;animation:floatbox 9s ease-in-out infinite reverse;transform:rotate(30deg)}
+    .bx5{width:35px;height:35px;border-color:rgba(74,222,128,.22);top:75%;left:18%;animation:floatbox 6s ease-in-out infinite;transform:rotate(60deg)}
+    .bx6{width:85px;height:85px;border-color:rgba(216,180,254,.15);top:35%;left:28%;animation:floatbox 11s ease-in-out infinite reverse;transform:rotate(25deg)}
+
+    /* Filled boxes with gradients - rounded */
+    .box-filled{position:absolute;pointer-events:none;border-radius:16px}
+    .bf1{width:60px;height:60px;background:linear-gradient(135deg,rgba(183,148,246,.15),rgba(56,189,248,.1));top:8%;right:25%;animation:floatbox 12s ease-in-out infinite;transform:rotate(10deg)}
+    .bf2{width:45px;height:45px;background:linear-gradient(135deg,rgba(251,113,133,.12),rgba(251,146,60,.1));top:45%;right:8%;animation:floatbox 8s ease-in-out infinite reverse;transform:rotate(40deg)}
+    .bf3{width:30px;height:30px;background:linear-gradient(135deg,rgba(74,222,128,.15),rgba(56,189,248,.1));bottom:25%;left:35%;animation:floatbox 10s ease-in-out infinite;transform:rotate(55deg)}
+
+    /* Floating circles */
+    .floater{position:absolute;border-radius:50%;pointer-events:none}
+    .fl1{width:15px;height:15px;background:var(--violet);opacity:.3;top:15%;left:40%;animation:floatUp 6s ease-in-out infinite}
+    .fl2{width:10px;height:10px;background:var(--cyan);opacity:.4;top:40%;left:8%;animation:floatUp 8s ease-in-out infinite reverse}
+    .fl3{width:20px;height:20px;background:var(--rose);opacity:.25;top:70%;left:45%;animation:floatUp 7s ease-in-out infinite}
+    .fl4{width:8px;height:8px;background:var(--mint);opacity:.35;top:25%;right:15%;animation:floatUp 9s ease-in-out infinite reverse}
+    .fl5{width:12px;height:12px;background:var(--amber);opacity:.3;bottom:30%;right:20%;animation:floatUp 5s ease-in-out infinite}
+
+    /* Cross/plus shapes - rounded */
+    .cross{position:absolute;pointer-events:none}
+    .cross::before,.cross::after{content:'';position:absolute;background:var(--border2);border-radius:2px}
+    .cross::before{width:20px;height:3px;top:50%;left:50%;transform:translate(-50%,-50%)}
+    .cross::after{width:3px;height:20px;top:50%;left:50%;transform:translate(-50%,-50%)}
+    .cr1{top:30%;left:15%;animation:rotateCross 15s linear infinite}
+    .cr2{top:60%;right:12%;animation:rotateCross 20s linear infinite reverse}
+    .cr3{bottom:20%;left:25%;animation:rotateCross 12s linear infinite}
+
+    /* Dot grids */
+    .dotgrid{position:absolute;display:grid;gap:12px;pointer-events:none;opacity:.1}
+    .dg1{grid-template-columns:repeat(12,1fr);bottom:6%;right:4%}
+    .dg2{grid-template-columns:repeat(8,1fr);top:18%;left:3%}
+    .dg3{grid-template-columns:repeat(6,1fr);top:55%;right:18%}
+    .dot{width:4px;height:4px;border-radius:50%}
+    .dg1 .dot{background:var(--cyan)}
+    .dg2 .dot{background:var(--violet)}
+    .dg3 .dot{background:var(--rose)}
+
+    /* Animated lines */
+    .line-anim{position:absolute;height:2px;pointer-events:none;overflow:hidden;border-radius:1px}
+    .line-anim::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,var(--violet),transparent);animation:lineMove 4s linear infinite}
+    .la1{width:150px;top:25%;left:35%;transform:rotate(-15deg);border-radius:1px}
+    .la2{width:100px;top:65%;left:50%;transform:rotate(20deg);animation-delay:1s}
+    .la3{width:120px;bottom:35%;right:30%;transform:rotate(-30deg);animation-delay:2s}
+
+    /* Hero text */
+    .h-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--mint);
+      letter-spacing:3px;text-transform:uppercase;display:flex;align-items:center;gap:1rem;
+      margin-bottom:2rem;position:relative;z-index:10;animation:fadeIn 1s .2s both}
+    .h-label::before{content:'';width:40px;height:2px;background:var(--mint);border-radius:1px}
+    .pulse-dot{width:8px;height:8px;background:var(--mint);border-radius:50%;
+      box-shadow:0 0 20px var(--mint);animation:pulseGlow 2s ease-in-out infinite}
+
+    .h-title{font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(4rem,11vw,12rem);line-height:.88;letter-spacing:-1px;
+      position:relative;z-index:10;margin-bottom:3rem;animation:slideUp 1s .4s both}
+    .h-t1{display:block;color:var(--text);text-shadow:0 0 80px rgba(183,148,246,.2)}
+    .h-t2{display:block;background:var(--g1);-webkit-background-clip:text;
+      background-clip:text;-webkit-text-fill-color:transparent;position:relative}
+    .h-t2::after{content:'';position:absolute;inset:0;background:var(--g1);filter:blur(40px);opacity:.3;z-index:-1}
+    .h-t3{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(183,148,246,.35);position:relative}
+
+    .h-bot{display:flex;align-items:flex-end;justify-content:space-between;
+      position:relative;z-index:10;animation:slideUp 1s .6s both}
+    .h-desc{max-width:520px;font-size:1.05rem;color:var(--soft);line-height:1.9;font-weight:300}
+    .h-ctas{display:flex;gap:1.2rem;align-items:center}
+
+    /* Buttons - enhanced with more rounding */
+    .btn{display:inline-flex;align-items:center;gap:.8rem;padding:1rem 2rem;
+      text-decoration:none;font-size:.9rem;font-weight:500;letter-spacing:.5px;
+      position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;border-radius:50px}
+    .btn-p{background:var(--violet3);color:#fff}
+    .btn-p::before{content:'';position:absolute;inset:0;background:var(--g1);opacity:0;transition:opacity .3s}
+    .btn-p:hover::before{opacity:1}
+    .btn-p:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(159,122,234,.5)}
+    .btn-p span{position:relative;z-index:1}
+    .btn-o{border:1px solid var(--border);color:var(--soft);background:rgba(255,255,255,.02)}
+    .btn-o:hover{border-color:var(--violet);color:var(--text);background:rgba(183,148,246,.1);transform:translateY(-3px)}
+
+    /* ===== TICKER ===== */
+    .ticker-wrap{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+      overflow:hidden;padding:1rem 0;position:relative;z-index:5}
+    .ticker{display:flex;animation:tick 40s linear infinite;white-space:nowrap}
+    .ti{flex-shrink:0;padding:0 2.5rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;
+      color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:1.2rem}
+    .ti-dot{width:4px;height:4px;background:var(--violet);border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
+    .ti-math{color:var(--cyan);font-size:.85rem}
+
+    /* ===== SECTIONS ===== */
+    .wrap{max-width:1400px;margin:0 auto}
+    .sec{padding:10rem 4rem;position:relative;z-index:5}
+
+    .sec-lbl{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:4px;
+      text-transform:uppercase;color:var(--violet);margin-bottom:1.5rem;
+      display:flex;align-items:center;gap:1rem}
+    .sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);max-width:120px;border-radius:1px}
+
+    .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5.5vw,6rem);
+      letter-spacing:1px;line-height:.95;margin-bottom:5rem}
+
+    /* ===== FLOATING MATH OVERLAY in sections ===== */
+    .math-float{position:absolute;font-family:'JetBrains Mono',monospace;font-size:.75rem;
+      color:var(--violet);opacity:.1;pointer-events:none;white-space:nowrap;
+      animation:mathFloat 10s ease-in-out infinite}
+
+    /* ===== DATA FOCUS SECTION - NEW ===== */
+    .data-focus-sec{background:linear-gradient(180deg,var(--bg2),var(--bg3),var(--bg2));position:relative;z-index:5;padding:8rem 4rem}
+    .data-focus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3rem;max-width:1200px;margin:0 auto}
+    .data-focus-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:2.5rem;position:relative;overflow:hidden;transition:all .4s}
+    .data-focus-card:hover{transform:translateY(-8px);border-color:rgba(183,148,246,.3);box-shadow:0 30px 60px rgba(0,0,0,.3)}
+    .data-focus-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g1);border-radius:24px 24px 0 0;opacity:0;transition:opacity .4s}
+    .data-focus-card:hover::before{opacity:1}
+    
+    .dfc-icon{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:1.8rem;background:var(--bg);border:1px solid var(--border);transition:all .4s}
+    .data-focus-card:hover .dfc-icon{transform:scale(1.1);border-color:var(--violet);box-shadow:0 0 30px rgba(183,148,246,.2)}
+    .dfc-icon.viz{background:linear-gradient(135deg,rgba(183,148,246,.15),rgba(56,189,248,.1))}
+    .dfc-icon.analysis{background:linear-gradient(135deg,rgba(251,113,133,.15),rgba(251,146,60,.1))}
+    .dfc-icon.modeling{background:linear-gradient(135deg,rgba(74,222,128,.15),rgba(45,212,191,.1))}
+    .dfc-icon.ai{background:linear-gradient(135deg,rgba(216,180,254,.15),rgba(183,148,246,.1))}
+    
+    .dfc-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:1px;margin-bottom:1rem}
+    .dfc-desc{font-size:.95rem;color:var(--soft);line-height:1.8}
+    .dfc-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+    .dfc-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.4rem .8rem;background:var(--bg);border-radius:20px;color:var(--muted);border:1px solid var(--border)}
+
+    /* ===== AI SECTION ===== */
+    .ai-bg{background:linear-gradient(180deg,transparent,rgba(183,148,246,.05),transparent);position:relative}
+
+    /* Decorative corner elements - rounded */
+    .corner-deco{position:absolute;width:60px;height:60px;pointer-events:none}
+    .corner-deco::before,.corner-deco::after{content:'';position:absolute;background:var(--border2);border-radius:2px}
+    .cd1{top:8rem;left:2rem}
+    .cd1::before{width:30px;height:2px;top:0;left:0}
+    .cd1::after{width:2px;height:30px;top:0;left:0}
+    .cd2{bottom:4rem;right:2rem}
+    .cd2::before{width:30px;height:2px;bottom:0;right:0}
+    .cd2::after{width:2px;height:30px;bottom:0;right:0}
+
+    .ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .ai-card{background:var(--surface);padding:2.5rem;position:relative;overflow:hidden;transition:all .4s;border-radius:20px;border:1px solid var(--border)}
+    .ai-card:hover{background:var(--surface2);transform:translateY(-5px);border-color:rgba(183,148,246,.25)}
+    .ai-accent{position:absolute;top:0;left:0;right:0;height:4px;transform:scaleX(0);transform-origin:left;transition:transform .5s;border-radius:20px 20px 0 0}
+    .ai-card:hover .ai-accent{transform:scaleX(1)}
+    .ac1{background:var(--g1)}.ac2{background:var(--g2)}.ac3{background:var(--g3)}
+
+    .ai-co{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:3px;
+      text-transform:uppercase;color:var(--mint);margin-bottom:.75rem}
+    .ai-role{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:1px;margin-bottom:2rem}
+    .ai-list{list-style:none}
+    .ai-list li{display:flex;align-items:baseline;gap:.75rem;padding:.7rem 0;
+      border-bottom:1px solid var(--border);font-size:.9rem;color:var(--soft);transition:all .3s}
+    .ai-list li:last-child{border-bottom:none}
+    .ai-card:hover .ai-list li{color:var(--text);padding-left:.5rem}
+    .ai-list li::before{content:'→';color:var(--violet);font-size:.7rem;flex-shrink:0;font-family:'JetBrains Mono',monospace;transition:transform .3s}
+    .ai-card:hover .ai-list li::before{transform:translateX(5px)}
+
+    /* ===== PROJECTS ===== */
+    .proj-row{display:grid;grid-template-columns:140px 1fr 60px;gap:3rem;align-items:start;
+      padding:4rem 0;border-bottom:1px solid var(--border);position:relative;transition:all .4s}
+    .proj-row::before{content:'';position:absolute;left:-4rem;right:-4rem;top:0;bottom:0;
+      background:linear-gradient(90deg,rgba(183,148,246,.04),rgba(56,189,248,.04));opacity:0;transition:opacity .4s;pointer-events:none;border-radius:16px}
+    .proj-row:hover::before{opacity:1}
+    .proj-row:last-child{border-bottom:none}
+
+    .p-idx .p-num{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;line-height:1;
+      color:var(--surface2);margin-bottom:.4rem;transition:all .5s}
+    .proj-row:hover .p-num{
+      background:var(--g1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      color:transparent;transform:scale(1.05)}
+    .p-cat{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:2px;
+      color:var(--muted);text-transform:uppercase}
+
+    .p-title{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.5px;line-height:1;margin-bottom:1rem;transition:color .3s}
+    .proj-row:hover .p-title{color:var(--text)}
+    .p-desc{font-size:.95rem;color:var(--soft);line-height:1.85;font-weight:300;max-width:580px;margin-bottom:1.8rem}
+    .p-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+    .tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:1px;text-transform:uppercase;
+      padding:.4rem .9rem;border:1px solid var(--border);color:var(--muted);transition:all .3s;background:rgba(255,255,255,.02);border-radius:20px}
+    .proj-row:hover .tag{border-color:rgba(183,148,246,.4);color:var(--soft);background:rgba(183,148,246,.08)}
+    .p-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--violet);text-decoration:none;
+      font-size:.85rem;font-weight:500;letter-spacing:.5px;transition:all .3s}
+    .p-link:hover{gap:1rem;color:var(--cyan)}
+    .p-side{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);
+      writing-mode:vertical-rl;letter-spacing:3px;text-transform:uppercase;opacity:.25;align-self:center}
+
+    /* ===== SKILLS ===== */
+    .skills-bg{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+    .skills-bg::before{content:'';position:absolute;top:-400px;right:-400px;width:900px;height:900px;border-radius:50%;
+      background:radial-gradient(circle,rgba(183,148,246,.06),transparent 70%);pointer-events:none}
+    .skills-bg::after{content:'';position:absolute;bottom:-300px;left:-300px;width:700px;height:700px;border-radius:50%;
+      background:radial-gradient(circle,rgba(56,189,248,.04),transparent 70%);pointer-events:none}
+
+    .s-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+    .s-card{background:var(--bg);padding:2.5rem;position:relative;overflow:hidden;transition:all .4s;border-radius:20px;border:1px solid var(--border)}
+    .s-card:hover{background:var(--bg3);transform:translateY(-8px);border-color:rgba(183,148,246,.25)}
+    .s-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      opacity:0;transition:opacity .4s;border-radius:20px 20px 0 0}
+    .s-card:hover::before{opacity:1}
+    .sc1::before{background:var(--g1)}.sc2::before{background:var(--g4)}.sc3::before{background:var(--g2)}.sc4::before{background:var(--g3)}
+
+    .s-icon-box{width:56px;height:56px;border:1px solid var(--border);display:flex;align-items:center;
+      justify-content:center;margin-bottom:2rem;transition:all .4s;font-size:1.3rem;position:relative;border-radius:16px;background:var(--surface)}
+    .s-card:hover .s-icon-box{border-color:var(--violet);box-shadow:0 0 30px rgba(183,148,246,.25);transform:scale(1.1)}
+    .s-icon-box.viz{background:linear-gradient(135deg,rgba(183,148,246,.2),rgba(56,189,248,.15))}
+    .s-icon-box.code{background:linear-gradient(135deg,rgba(129,140,248,.2),rgba(183,148,246,.15))}
+    .s-icon-box.analytics{background:linear-gradient(135deg,rgba(251,113,133,.2),rgba(251,146,60,.15))}
+    .s-icon-box.ai{background:linear-gradient(135deg,rgba(74,222,128,.2),rgba(45,212,191,.15))}
+    .s-name{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:1px;margin-bottom:1.5rem}
+    .s-items{list-style:none}
+    .s-items li{font-size:.88rem;color:var(--muted);padding:.5rem 0;
+      border-bottom:1px solid rgba(255,255,255,.03);display:flex;align-items:center;gap:.6rem;transition:all .3s}
+    .s-items li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--violet);flex-shrink:0;transition:all .3s}
+    .s-card:hover .s-items li{color:var(--soft);padding-left:.3rem}
+    .s-card:hover .s-items li::before{background:var(--cyan);transform:scale(1.3)}
+    .s-items li:last-child{border-bottom:none}
+
+    /* ===== CONTACT - ENHANCED ===== */
+    .contact-sec{position:relative;text-align:center;padding:12rem 4rem 8rem;overflow:hidden}
+    .c-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+    .cr{position:absolute;border-radius:50%;border:1px solid;top:50%;left:50%;transform:translate(-50%,-50%);animation:crpulse 5s ease-in-out infinite}
+    .cr1{width:200px;height:200px;border-color:rgba(183,148,246,.2);animation-delay:0s}
+    .cr2{width:400px;height:400px;border-color:rgba(183,148,246,.12);animation-delay:.5s}
+    .cr3{width:600px;height:600px;border-color:rgba(56,189,248,.08);animation-delay:1s}
+    .cr4{width:800px;height:800px;border-color:rgba(56,189,248,.05);animation-delay:1.5s}
+    .cr5{width:1000px;height:1000px;border-color:rgba(183,148,246,.03);animation-delay:2s}
+
+    .cr-dashed{position:absolute;border-radius:50%;border:1px dashed;top:50%;left:50%;transform:translate(-50%,-50%);animation:crpulse 7s ease-in-out infinite reverse}
+    .crd1{width:300px;height:300px;border-color:rgba(251,113,133,.1);animation-delay:.3s}
+    .crd2{width:500px;height:500px;border-color:rgba(74,222,128,.08);animation-delay:.8s}
+
+    .c-latex{position:absolute;font-family:'JetBrains Mono',monospace;font-size:.8rem;
+      color:var(--violet);opacity:.08;pointer-events:none;animation:mathFloat 12s ease-in-out infinite}
+
+    .c-tag{display:inline-flex;align-items:center;gap:.6rem;
+      background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+      padding:.6rem 1.5rem;border-radius:50px;font-family:'JetBrains Mono',monospace;
+      font-size:.68rem;letter-spacing:2px;color:var(--mint);text-transform:uppercase;margin-bottom:3rem;transition:all .3s}
+    .c-tag:hover{transform:scale(1.05);background:rgba(74,222,128,.15)}
+    .c-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,8rem);
+      letter-spacing:2px;line-height:.95;margin-bottom:2rem;position:relative;z-index:2}
+    .c-grad{background:var(--g1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .c-sub{font-size:1.1rem;color:var(--soft);font-weight:300;margin-bottom:4rem;position:relative;z-index:2;max-width:500px;margin-left:auto;margin-right:auto}
+    
+    /* Enhanced Email Button */
+    .c-email{display:inline-block;font-family:'JetBrains Mono',monospace;
+      font-size:clamp(.9rem,2vw,1.3rem);color:var(--cyan);text-decoration:none;
+      padding:1.5rem 4rem;border:2px solid rgba(56,189,248,.4);position:relative;z-index:2;
+      transition:all .4s;letter-spacing:1px;background:linear-gradient(135deg,rgba(56,189,248,.08),rgba(183,148,246,.05));border-radius:50px}
+    .c-email:hover{background:linear-gradient(135deg,rgba(56,189,248,.15),rgba(183,148,246,.1));border-color:var(--cyan);box-shadow:0 0 60px rgba(56,189,248,.25),0 0 100px rgba(183,148,246,.15);transform:translateY(-5px) scale(1.02)}
+
+    /* Enhanced Social Links */
+    .contact-links{display:flex;justify-content:center;align-items:center;gap:2rem;margin-top:4rem;position:relative;z-index:2;flex-wrap:wrap}
+    .contact-link{display:flex;align-items:center;gap:1rem;padding:1rem 2rem;background:var(--surface);border:1px solid var(--border);border-radius:16px;text-decoration:none;transition:all .4s}
+    .contact-link:hover{transform:translateY(-5px);border-color:var(--violet);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+    .contact-link.linkedin:hover{border-color:#0077b5;box-shadow:0 20px 40px rgba(0,119,181,.2)}
+    .contact-link.phone:hover{border-color:var(--mint);box-shadow:0 20px 40px rgba(74,222,128,.2)}
+    .contact-link.cv:hover{border-color:var(--amber);box-shadow:0 20px 40px rgba(251,191,36,.2)}
+    
+    .cl-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:all .3s}
+    .contact-link.linkedin .cl-icon{background:linear-gradient(135deg,rgba(0,119,181,.2),rgba(0,119,181,.1));color:#0077b5}
+    .contact-link.phone .cl-icon{background:linear-gradient(135deg,rgba(74,222,128,.2),rgba(74,222,128,.1));color:var(--mint)}
+    .contact-link.cv .cl-icon{background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(251,191,36,.1));color:var(--amber)}
+    .contact-link:hover .cl-icon{transform:scale(1.1)}
+    
+    .cl-text{text-align:left}
+    .cl-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem}
+    .cl-value{font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--text);font-weight:500}
+
+    /* ===== DIVIDER ===== */
+    .divider{height:1px;background:var(--border);margin:0 4rem;position:relative;overflow:visible}
+    .divider-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      display:flex;align-items:center;gap:1rem}
+    .d-dot{width:8px;height:8px;border-radius:50%;background:var(--violet);box-shadow:0 0 20px var(--violet);animation:pulse 2s infinite}
+    .d-line{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent);border-radius:1px}
+
+    /* ===== FOOTER ===== */
+    footer{border-top:1px solid var(--border);padding:2.5rem 4rem;
+      display:flex;justify-content:space-between;align-items:center;position:relative;z-index:5;background:var(--bg2)}
+    .f-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:3px;
+      background:var(--g1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .f-copy,.f-loc{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:1px}
+    .f-loc{display:flex;align-items:center;gap:.6rem}
+    .f-green{width:8px;height:8px;border-radius:50%;background:var(--mint);animation:pulseGlow 2s infinite;box-shadow:0 0 15px var(--mint)}
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    @keyframes floatbox{0%,100%{transform:rotate(var(--r,0deg)) translateY(0)}50%{transform:rotate(var(--r,0deg)) translateY(-20px)}}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+    @keyframes pulseGlow{0%,100%{opacity:1;box-shadow:0 0 15px currentColor}50%{opacity:.6;box-shadow:0 0 30px currentColor}}
+    @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes mathFloat{0%,100%{transform:translateY(0) rotate(0deg);opacity:.08}50%{transform:translateY(-20px) rotate(2deg);opacity:.15}}
+    @keyframes crpulse{0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(1)}50%{opacity:.7;transform:translate(-50%,-50%) scale(1.03)}}
+    @keyframes blobFloat{0%,100%{transform:translate(0,0)}25%{transform:translate(30px,-20px)}50%{transform:translate(-20px,30px)}75%{transform:translate(20px,20px)}}
+    @keyframes floatUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+    @keyframes rotateCross{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    @keyframes lineMove{0%{left:-100%}100%{left:100%}}
+    @keyframes gradientShift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(50px);transition:opacity 1s cubic-bezier(.23,1,.32,1),transform 1s cubic-bezier(.23,1,.32,1)}
+    .reveal.on{opacity:1;transform:translateY(0)}
+
+    .reveal:nth-child(1){transition-delay:.1s}
+    .reveal:nth-child(2){transition-delay:.2s}
+    .reveal:nth-child(3){transition-delay:.3s}
+    .reveal:nth-child(4){transition-delay:.4s}
+
+    @media(max-width:1100px){
+      .ai-grid{grid-template-columns:1fr 1fr}
+      .s-grid{grid-template-columns:1fr 1fr}
+      .data-focus-grid{grid-template-columns:1fr}
+      .proj-row{grid-template-columns:100px 1fr;gap:2rem}
+      .p-side{display:none}
+    }
+    @media(max-width:768px){
+      nav{padding:1rem 1.5rem}.nav-links{display:none}
+      .hero{padding:0 1.5rem 4rem}
+      .h-bot{flex-direction:column;align-items:flex-start;gap:2rem}
+      .sec{padding:6rem 1.5rem}
+      .data-focus-sec{padding:5rem 1.5rem}
+      .ai-grid{grid-template-columns:1fr}
+      .s-grid{grid-template-columns:1fr}
+      .proj-row{grid-template-columns:1fr;gap:1.5rem}
+      .contact-links{flex-direction:column;gap:1rem}
+      footer{flex-direction:column;gap:1rem;text-align:center}
+      .ring,.ring-dashed,.blob{opacity:.5}
     }
   </style>
+<base target="_blank">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans selection:bg-yellow-400 selection:text-indigo-900">
+<body>
 
-  <!-- NAVIGATION -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-3">
-      <a href="#" class="text-lg font-bold text-indigo-900 select-none">Elsayed</a>
-      <ul class="flex space-x-6 font-medium">
-        <li><a href="#about" class="text-gray-700 hover:text-indigo-600 focus-visible:text-indigo-600">About</a></li>
-        <li><a href="#projects" class="text-gray-700 hover:text-indigo-600 focus-visible:text-indigo-600">Projects</a></li>
-        <li><a href="#contact" class="text-gray-700 hover:text-indigo-600 focus-visible:text-indigo-600">Contact</a></li>
-      </ul>
+<!-- CANVASES -->
+<canvas id="c-particles"></canvas>
+<canvas id="c-math"></canvas>
+<canvas id="c-circuit"></canvas>
+<canvas id="c-constellation"></canvas>
+<div class="noise"></div>
+<div class="vignette"></div>
+<div id="prog"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">Elsayed</a>
+  <ul class="nav-links">
+    <li><a href="#data-focus"><em>//</em> Data Analysis</a></li>
+    <li><a href="#ai"><em>//</em> AI Training</a></li>
+    <li><a href="#data"><em>//</em> Projects</a></li>
+    <li><a href="#skills"><em>//</em> Skills</a></li>
+    <li><a href="#contact"><em>//</em> Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ======== HERO ======== -->
+<header class="hero">
+  <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+  <div class="ring r4"></div><div class="ring r5"></div><div class="ring r6"></div>
+  <div class="ring r7"></div><div class="ring r8"></div>
+  <div class="ring-dashed rd1"></div><div class="ring-dashed rd2"></div>
+  <div class="blob bl1"></div><div class="blob bl2"></div><div class="blob bl3"></div>
+  <div class="blob bl4"></div><div class="blob bl5"></div>
+  <div class="box bx1" style="--r:15deg"></div><div class="box bx2" style="--r:45deg"></div>
+  <div class="box bx3" style="--r:5deg"></div><div class="box bx4" style="--r:30deg"></div>
+  <div class="box bx5" style="--r:60deg"></div><div class="box bx6" style="--r:25deg"></div>
+  <div class="box-filled bf1"></div><div class="box-filled bf2"></div><div class="box-filled bf3"></div>
+  <div class="floater fl1"></div><div class="floater fl2"></div><div class="floater fl3"></div>
+  <div class="floater fl4"></div><div class="floater fl5"></div>
+  <div class="cross cr1"></div><div class="cross cr2"></div><div class="cross cr3"></div>
+  <div class="dotgrid dg1" id="dg1"></div>
+  <div class="dotgrid dg2" id="dg2"></div>
+  <div class="dotgrid dg3" id="dg3"></div>
+  <div class="line-anim la1"></div><div class="line-anim la2"></div><div class="line-anim la3"></div>
+
+  <div class="math-float" style="top:12%;left:32%;animation-delay:0s">∑ xᵢ · wᵢ + b</div>
+  <div class="math-float" style="top:22%;left:48%;animation-delay:1.5s;color:var(--cyan)">∂L/∂w = -2Xᵀ(y - Xw)</div>
+  <div class="math-float" style="top:35%;left:40%;animation-delay:3s">σ(z) = 1/(1+e⁻ᶻ)</div>
+  <div class="math-float" style="top:48%;left:35%;animation-delay:2s;color:var(--rose)">P(A|B) = P(B|A)·P(A)/P(B)</div>
+  <div class="math-float" style="top:58%;left:42%;animation-delay:4s;color:var(--amber)">μ = (1/n)∑xᵢ</div>
+  <div class="math-float" style="top:72%;left:50%;animation-delay:1s">ŷ = β₀ + β₁x₁ + ε</div>
+  <div class="math-float" style="top:18%;left:58%;animation-delay:5s;color:var(--mint);font-size:.65rem">R² = 1 - SS_res/SS_tot</div>
+  <div class="math-float" style="top:82%;left:45%;animation-delay:2.5s;font-size:.65rem">∇f(x) = [∂f/∂x₁ … ∂f/∂xₙ]</div>
+  <div class="math-float" style="top:65%;left:60%;animation-delay:3.5s;color:var(--lavender)">𝔼[X] = ∫x·f(x)dx</div>
+
+  <div class="hero-content">
+    <div class="h-label"><div class="pulse-dot"></div>Available for Opportunities</div>
+    <h1 class="h-title">
+      <span class="h-t1">Data</span>
+      <span class="h-t2">Analyst &</span>
+      <span class="h-t3">AI Specialist</span>
+    </h1>
+    <div class="h-bot">
+      <p class="h-desc">I transform raw data into actionable insights using Power BI, SQL, and Python. Leveraging AI tools to enhance analysis speed and accuracy, I help businesses make smarter decisions through compelling visualizations and deep statistical understanding.</p>
+      <div class="h-ctas">
+        <a href="#data-focus" class="btn btn-p"><span>Explore My Work</span> ↓</a>
+        <a href="cv.pdf" class="btn btn-o" target="_blank">Download CV</a>
+      </div>
     </div>
-  </nav>
-
-  <!-- HEADER -->
-  <header class="bg-gradient-to-r from-indigo-900 to-yellow-500 text-white text-center py-24 rounded-b-[50px] shadow-lg mt-14 px-6">
-    <h1 class="text-4xl font-bold mb-4 select-none">Hi, I'm Elsayed</h1>
-    <p class="text-lg max-w-2xl mx-auto leading-relaxed">
-      Junior Data & Financial Analyst passionate about transforming data into actionable insights.
-      Skilled in <span class="font-semibold">Excel, SQL, Python, Power BI</span>, and experienced in
-      building financial reports & dashboards that support decision-making.
-    </p>
-  </header>
-
-  <!-- ABOUT -->
-  <section id="about" class="max-w-4xl mx-auto my-12 bg-white shadow rounded-2xl p-8 scroll-mt-24">
-    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6 select-none">About Me</h2>
-    <p class="text-gray-700 leading-relaxed">
-      I specialize in <strong>data visualization</strong>, <strong>financial reporting</strong>, and
-      <strong>business intelligence</strong>. With hands-on experience in Power BI and SQL, I enjoy solving complex
-      problems, turning raw numbers into meaningful insights, and helping organizations achieve growth.  
-      In addition, I have worked on <strong>financial analysis projects</strong> including loan risk reports,
-      cost analysis, and profitability dashboards.
-    </p>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="max-w-6xl mx-auto my-12 scroll-mt-24 px-4">
-    <h2 class="text-3xl font-extrabold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-3 mb-10 select-none">
-      Projects
-    </h2>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-      
-      <!-- Blinkit -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
-          <img src="PDF/Blinkit.png" alt="Blinkit Sales Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
-        </div>
-        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Blinkit Sales Dashboard</h3>
-        <p class="text-gray-600 mt-3 leading-relaxed">Interactive Power BI dashboard showing sales, delivery KPIs, and customer trends.</p>
-        <a href="PDF/Blinkit.pdf" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">View PDF</a>
-      </article>
-<!-- Uber Ride Analytics 2024 -->
-<article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
-  <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
-    <img src="PDF/uber_icon_146079.png" alt="Uber Ride Analytics Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
   </div>
-  <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Uber Ride Analytics 2024</h3>
-  <p class="text-gray-600 mt-3 leading-relaxed">
-    A Power BI dashboard analyzing Uber rides for 2024 — covering booking trends, cancellations, vehicle performance, and revenue insights.
-  </p>
-  <a href="PDF/UberDashBoard.pdf" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">View PDF</a>
-</article>
+</header>
 
-      <!-- Pizza -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
-          <img src="PDF/pizzas.png" alt="Pizza Sales Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker"></div>
+</div>
+
+<!-- ======== DATA FOCUS SECTION - NEW ======== -->
+<div id="data-focus" class="data-focus-sec" style="position:relative;z-index:5">
+  <div class="wrap">
+    <div class="sec-lbl reveal">What I Do</div>
+    <h2 class="sec-title reveal">Data Analysis<br>Expertise</h2>
+    
+    <div class="data-focus-grid reveal">
+      <div class="data-focus-card">
+        <div class="dfc-icon viz">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
         </div>
-        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Pizza Sales Dashboard</h3>
-        <p class="text-gray-600 mt-3 leading-relaxed">Analyzed pizza sales to uncover top-sellers, trends, and customer preferences.</p>
-        <a href="PDF/Pizza.pdf" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">View PDF</a>
-      </article>
-
-      <!-- COVID -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
-          <img src="PDF/covid.webp" alt="COVID-19 Tracker" class="object-contain max-h-full max-w-full" loading="lazy" />
+        <div class="dfc-title">Data Visualization</div>
+        <div class="dfc-desc">Creating interactive dashboards and reports that tell compelling stories. Transforming complex datasets into clear, actionable visual insights using Power BI and advanced DAX calculations.</div>
+        <div class="dfc-tags"><span class="dfc-tag">Power BI</span><span class="dfc-tag">DAX</span><span class="dfc-tag">Power Query</span><span class="dfc-tag">Dashboards</span></div>
+      </div>
+      
+      <div class="data-focus-card">
+        <div class="dfc-icon analysis">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
         </div>
-        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">COVID-19 Tracker</h3>
-        <p class="text-gray-600 mt-3 leading-relaxed">Real-time Power BI dashboard with KPIs, slicers, and global case analysis.</p>
-        <a href="PDF/covid.pdf" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">View PDF</a>
-      </article>
-
-      <!-- Financial Loan -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
-          <img src="PDF/finace.png" alt="Financial Loan Report" class="object-contain max-h-full max-w-full" loading="lazy" />
+        <div class="dfc-title">Statistical Analysis</div>
+        <div class="dfc-desc">Applying statistical methods to uncover patterns, trends, and correlations. Using hypothesis testing and regression analysis to validate findings and support data-driven decisions.</div>
+        <div class="dfc-tags"><span class="dfc-tag">Python</span><span class="dfc-tag">Pandas</span><span class="dfc-tag">Statistics</span><span class="dfc-tag">Regression</span></div>
+      </div>
+      
+      <div class="data-focus-card">
+        <div class="dfc-icon modeling">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
         </div>
-        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Financial Loan Report</h3>
-        <p class="text-gray-600 mt-3 leading-relaxed">Loan performance analysis with risk evaluation and repayment behavior insights.</p>
-        <a href="PDF/financial loan.pbix" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">Download PBIX</a>
-      </article>
-
-      <!-- Hotel -->
-      <article tabindex="0" class="fade-slide-up group bg-white rounded-3xl shadow-md hover:shadow-xl transform hover:scale-[1.03] transition duration-300 flex flex-col items-center text-center p-8 cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 ripple">
-        <div class="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-50 to-white p-2 mb-6 floating-img">
-          <img src="PDF/hotel.jpg" alt="Hotel Data Dashboard" class="object-contain max-h-full max-w-full" loading="lazy" />
+        <div class="dfc-title">Data Modeling</div>
+        <div class="dfc-desc">Designing efficient data models and ETL pipelines. Structuring databases for optimal performance and building relationships that enable deep analytical exploration.</div>
+        <div class="dfc-tags"><span class="dfc-tag">SQL</span><span class="dfc-tag">ETL</span><span class="dfc-tag">Data Warehousing</span><span class="dfc-tag">Modeling</span></div>
+      </div>
+      
+      <div class="data-focus-card">
+        <div class="dfc-icon ai">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/></svg>
         </div>
-        <h3 class="text-xl font-semibold text-indigo-900 group-hover:text-indigo-700 transition">Hotel Data Dashboard</h3>
-        <p class="text-gray-600 mt-3 leading-relaxed">Dashboard built in Power BI for hotel occupancy, revenue, and customer insights.</p>
-        <a href="PDF/Hotel Data.pbix" target="_blank" class="mt-6 inline-block px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">Download PBIX</a>
-      </article>
-
+        <div class="dfc-title">AI-Enhanced Analysis</div>
+        <div class="dfc-desc">Leveraging artificial intelligence to accelerate data processing and uncover hidden insights. Using AI tools to automate repetitive tasks and enhance analytical capabilities.</div>
+        <div class="dfc-tags"><span class="dfc-tag">AI Tools</span><span class="dfc-tag">Automation</span><span class="dfc-tag">Machine Learning</span><span class="dfc-tag">NLP</span></div>
+      </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- CONTACT -->
-  <section id="contact" class="max-w-4xl mx-auto my-12 bg-white shadow rounded-2xl p-8 scroll-mt-24">
-    <h2 class="text-2xl font-semibold text-indigo-900 border-b-4 border-yellow-500 inline-block pb-2 mb-6 select-none">Contact</h2>
-    <ul class="space-y-4 text-lg">
-      <li>Email: <a href="mailto:elsayedhawaa@gmail.com" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">elsayedhawaa@gmail.com</a></li>
-      <li>Phone: <a href="tel:+201140116661" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">+20 114 011 6661</a></li>
-      <li>LinkedIn: <a href="https://www.linkedin.com/in/elsayed-ragab-961aa2239/" target="_blank" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">View Profile</a></li>
-      <li>CV: <a href="cv.pdf" target="_blank" class="text-indigo-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded">Download my CV</a></li>
-    </ul>
-  </section>
+<div class="divider" style="position:relative;z-index:5"><div class="divider-core"><div class="d-line"></div><div class="d-dot"></div><div class="d-line"></div></div></div>
 
-  <!-- FOOTER -->
-  <footer class="bg-indigo-900 text-white text-center py-6 mt-12 select-none">
-    <p>© 2025 Elsayed. Built with <span aria-label="love" role="img">❤</span> using GitHub Pages.</p>
-  </footer>
+<!-- ======== AI WORK ======== -->
+<div id="ai" style="background:var(--bg2);position:relative;z-index:5" class="ai-bg">
+  <div class="sec wrap reveal">
+    <div class="corner-deco cd1"></div><div class="corner-deco cd2"></div>
+    <div class="math-float" style="top:5%;right:5%;animation-delay:0s;position:absolute">𝔼[X] = ∫x·f(x)dx</div>
+    <div class="math-float" style="bottom:8%;left:3%;animation-delay:2s;position:absolute;color:var(--cyan)">Var(X) = 𝔼[X²] − (𝔼[X])²</div>
+    <div class="math-float" style="top:40%;left:2%;animation-delay:4s;position:absolute;color:var(--rose);font-size:.7rem">H(X) = -∑p(x)log p(x)</div>
+    <div class="sec-lbl">Current Work</div>
+    <h2 class="sec-title">Training the<br>Next Generation<br>of AI</h2>
 
-  <!-- Animation Script -->
-  <script>
-    // Animate nav background on scroll
-    const nav = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if(window.scrollY > 20) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+    <div class="ai-grid reveal">
+      <div class="ai-card">
+        <div class="ai-accent ac1"></div>
+        <div class="ai-co">Outlier</div>
+        <div class="ai-role">AI Quality Analyst</div>
+        <ul class="ai-list">
+          <li>Arabic Response Evaluation (Egyptian, Saudi, UAE, Gulf, MSA)</li>
+          <li>Mathematical Reasoning Assessment</li>
+          <li>LaTeX Output Validation</li>
+          <li>Fluency & Localization Review</li>
+          <li>English Audio Transcription</li>
+          <li>OCR & Image-to-Text Validation</li>
+          <li>AI Safety & Sensitive Content Review</li>
+        </ul>
+      </div>
+      <div class="ai-card">
+        <div class="ai-accent ac2"></div>
+        <div class="ai-co">Alignerr</div>
+        <div class="ai-role">AI Data Rater</div>
+        <ul class="ai-list">
+          <li>Mathematical Solution Evaluation</li>
+          <li>Language Model Assessment</li>
+          <li>Content Safety & Moderation</li>
+          <li>Response Quality Scoring</li>
+        </ul>
+      </div>
+      <div class="ai-card">
+        <div class="ai-accent ac3"></div>
+        <div class="ai-co">Turing AI</div>
+        <div class="ai-role">AI Evaluator</div>
+        <ul class="ai-list">
+          <li>Audio Transcription Projects</li>
+          <li>Document Analysis & OCR</li>
+          <li>Multilingual Content Review</li>
+          <li>Safety Protocol Testing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider" style="position:relative;z-index:5"><div class="divider-core"><div class="d-line"></div><div class="d-dot"></div><div class="d-line"></div></div></div>
+
+<!-- ======== PROJECTS ======== -->
+<div id="data" style="position:relative;z-index:5">
+  <div class="sec wrap">
+    <div class="math-float" style="top:3%;right:4%;animation-delay:1s;position:absolute;color:var(--amber)">R² = 1 − SSᵣₑₛ/SSₜₒₜ</div>
+    <div class="math-float" style="bottom:15%;left:2%;animation-delay:3s;position:absolute;color:var(--mint);font-size:.7rem">SELECT * FROM insights WHERE value > 0</div>
+    <div class="sec-lbl">Featured Projects</div>
+    <h2 class="sec-title reveal">Data Analysis<br>Portfolio</h2>
+
+    <div class="proj-row reveal">
+      <div class="p-idx"><div class="p-num">01</div><div class="p-cat">Financial Risk</div></div>
+      <div>
+        <h3 class="p-title">Loan Portfolio<br>Risk Assessment</h3>
+        <p class="p-desc">Built comprehensive risk evaluation models analyzing a large loan dataset. Identified high-risk segments and created visual dashboards that simplified decision-making for stakeholders.</p>
+        <div class="p-tags"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">SQL</span><span class="tag">Risk Modeling</span></div>
+        <a href="PDF/financial loan.pbix" class="p-link" target="_blank">Open Project →</a>
+      </div>
+      <div class="p-side">Financial Risk</div>
+    </div>
+
+    <div class="proj-row reveal">
+      <div class="p-idx"><div class="p-num">02</div><div class="p-cat">Sales Analytics</div></div>
+      <div>
+        <h3 class="p-title">Blinkit Sales<br>Performance</h3>
+        <p class="p-desc">Real-time sales analytics platform tracking delivery KPIs, customer trends, and market performance across regions — enabling data-driven inventory decisions.</p>
+        <div class="p-tags"><span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">Power Query</span></div>
+        <a href="PDF/Blinkit.pdf" class="p-link" target="_blank">Open Project →</a>
+      </div>
+      <div class="p-side">Sales Analytics</div>
+    </div>
+
+    <div class="proj-row reveal">
+      <div class="p-idx"><div class="p-num">03</div><div class="p-cat">Transportation</div></div>
+      <div>
+        <h3 class="p-title">Uber Ride<br>Analytics</h3>
+        <p class="p-desc">Comprehensive ride-booking analysis covering cancellations, vehicle performance, revenue patterns, and predictive demand forecasting across multiple city zones.</p>
+        <div class="p-tags"><span class="tag">Power BI</span><span class="tag">Analytics</span><span class="tag">Forecasting</span></div>
+        <a href="PDF/UberDashBoard.pdf" class="p-link" target="_blank">Open Project →</a>
+      </div>
+      <div class="p-side">Transportation</div>
+    </div>
+
+    <div class="proj-row reveal">
+      <div class="p-idx"><div class="p-num">04</div><div class="p-cat">Hospitality</div></div>
+      <div>
+        <h3 class="p-title">Hotel Revenue<br>Optimization</h3>
+        <p class="p-desc">Occupancy analysis and revenue management system tracking bookings, customer satisfaction metrics, and seasonal demand patterns to optimize pricing strategies.</p>
+        <div class="p-tags"><span class="tag">Power BI</span><span class="tag">Revenue Mgmt</span><span class="tag">Operations</span></div>
+        <a href="PDF/Hotel Data.pbix" class="p-link" target="_blank">Open Project →</a>
+      </div>
+      <div class="p-side">Hospitality</div>
+    </div>
+
+    <div class="proj-row reveal">
+      <div class="p-idx"><div class="p-num">05</div><div class="p-cat">Public Health</div></div>
+      <div>
+        <h3 class="p-title">COVID-19<br>Global Tracker</h3>
+        <p class="p-desc">Real-time pandemic dashboard with geographic analysis, vaccination tracking, and drill-down capabilities across continents — built to aid public health understanding.</p>
+        <div class="p-tags"><span class="tag">Power BI</span><span class="tag">Maps</span><span class="tag">API Integration</span></div>
+        <a href="PDF/covid.pdf" class="p-link" target="_blank">Open Project →</a>
+      </div>
+      <div class="p-side">Public Health</div>
+    </div>
+
+    <div class="proj-row reveal">
+      <div class="p-idx"><div class="p-num">06</div><div class="p-cat">Food & Beverage</div></div>
+      <div>
+        <h3 class="p-title">Pizza Sales<br>Deep Dive</h3>
+        <p class="p-desc">Customer preference analysis uncovering top-selling items, peak hours, and seasonal trends — powered by SQL data modeling and clear interactive visuals.</p>
+        <div class="p-tags"><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">Customer Analytics</span></div>
+        <a href="PDF/Pizza.pdf" class="p-link" target="_blank">Open Project →</a>
+      </div>
+      <div class="p-side">Food & Beverage</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== SKILLS ======== -->
+<div id="skills" class="skills-bg" style="position:relative;z-index:5">
+  <div class="sec wrap">
+    <div class="math-float" style="top:5%;left:4%;animation-delay:3s;position:absolute;color:var(--lavender)">\vec{w} \leftarrow \vec{w} - \alpha\nabla J</div>
+    <div class="math-float" style="bottom:8%;right:3%;animation-delay:1s;position:absolute">SELECT * FROM insights</div>
+    <div class="math-float" style="top:50%;right:2%;animation-delay:5s;position:absolute;color:var(--rose);font-size:.7rem">df.groupby('category').agg({'value':'sum'})</div>
+    <div class="sec-lbl">Capabilities</div>
+    <h2 class="sec-title reveal">Tools &<br>Technologies</h2>
+
+    <div class="s-grid reveal">
+      <div class="s-card sc1">
+        <div class="s-icon-box viz">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="s-name">Data Viz</div>
+        <ul class="s-items">
+          <li>Power BI</li><li>DAX</li><li>Power Query</li><li>Advanced Excel</li>
+        </ul>
+      </div>
+      <div class="s-card sc2">
+        <div class="s-icon-box code">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="s-name">Languages</div>
+        <ul class="s-items">
+          <li>SQL</li><li>Python (Pandas)</li><li>LaTeX</li><li>Arabic Dialects</li>
+        </ul>
+      </div>
+      <div class="s-card sc3">
+        <div class="s-icon-box analytics">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        </div>
+        <div class="s-name">Analysis</div>
+        <ul class="s-items">
+          <li>Financial Modeling</li><li>Risk Assessment</li><li>Statistical Analysis</li><li>ETL Processes</li>
+        </ul>
+      </div>
+      <div class="s-card sc4">
+        <div class="s-icon-box ai">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/></svg>
+        </div>
+        <div class="s-name">AI Training</div>
+        <ul class="s-items">
+          <li>Content Evaluation</li><li>Quality Assurance</li><li>Safety Review</li><li>Localization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== CONTACT - ENHANCED ======== -->
+<div id="contact" style="background:var(--bg2);position:relative;z-index:5">
+  <div class="contact-sec">
+    <div class="c-rings">
+      <div class="cr cr1"></div><div class="cr cr2"></div><div class="cr cr3"></div>
+      <div class="cr cr4"></div><div class="cr cr5"></div>
+      <div class="cr-dashed crd1"></div><div class="cr-dashed crd2"></div>
+    </div>
+
+    <div class="c-latex" style="top:8%;left:4%;animation-delay:0s">\mathcal{L}(\theta) = -\log P(y|\hat{y})</div>
+    <div class="c-latex" style="top:18%;right:5%;animation-delay:2s;color:var(--cyan)">f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}</div>
+    <div class="c-latex" style="bottom:22%;left:6%;animation-delay:4s;color:var(--amber)">W_{t+1} = W_t - \eta \cdot \nabla_W L</div>
+    <div class="c-latex" style="bottom:12%;right:4%;animation-delay:1s;color:var(--rose)">\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}</div>
+    <div class="c-latex" style="top:55%;left:2%;animation-delay:3s;color:var(--mint)">A = U\Sigma V^T</div>
+    <div class="c-latex" style="top:35%;right:2%;animation-delay:5s">\hat{y} = \sigma(Wx + b)</div>
+
+    <div class="c-tag reveal"><div class="pulse-dot"></div>Open to Work</div>
+    <h2 class="c-title reveal">Let's Build<br><span class="c-grad">Something</span></h2>
+    <p class="c-sub reveal">Have a data project in mind? Let's connect and turn your data into actionable insights.</p>
+    <a href="mailto:elsayedhawaa@gmail.com" class="c-email reveal">elsayedhawaa@gmail.com</a>
+
+    <div class="contact-links reveal">
+      <a href="https://www.linkedin.com/in/elsayed-ragab-961aa2239/" class="contact-link linkedin" target="_blank">
+        <div class="cl-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div class="cl-text">
+          <div class="cl-label">Connect on</div>
+          <div class="cl-value">LinkedIn</div>
+        </div>
+      </a>
+      
+      <a href="tel:+201140116661" class="contact-link phone">
+        <div class="cl-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="cl-text">
+          <div class="cl-label">Call Me</div>
+          <div class="cl-value">+20 114 011 6661</div>
+        </div>
+      </a>
+      
+      <a href="cv.pdf" class="contact-link cv" target="_blank">
+        <div class="cl-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="cl-text">
+          <div class="cl-label">Download</div>
+          <div class="cl-value">My CV</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Elsayed</div>
+  <div class="f-copy">© 2025 Elsayed Ragab — Built with data & curiosity</div>
+  <div class="f-loc"><div class="f-green"></div>Cairo, Egypt</div>
+</footer>
+
+<script>
+/* ========================
+   DOT GRIDS
+======================== */
+['dg1','dg2','dg3'].forEach((id,i) => {
+  const g = document.getElementById(id);
+  const count = i===0?100:i===1?64:48;
+  for(let j=0;j<count;j++){
+    const d = document.createElement('div');
+    d.className='dot';
+    g.appendChild(d);
+  }
+});
+
+/* ========================
+   CURSOR
+======================== */
+const cur = document.getElementById('cur');
+const curR = document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx-5+'px';cur.style.top=my-5+'px';
+});
+(function animR(){
+  rx+=(mx-rx-16)*.12; ry+=(my-ry-16)*.12;
+  curR.style.left=rx+'px'; curR.style.top=ry+'px';
+  requestAnimationFrame(animR);
+})();
+document.querySelectorAll('a,button,.ai-card,.s-card,.proj-row,.data-focus-card,.contact-link').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';cur.style.background='var(--rose)';curR.style.width='50px';curR.style.height='50px';curR.style.borderColor='rgba(251,113,133,.5)'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';cur.style.background='var(--cyan)';curR.style.width='32px';curR.style.height='32px';curR.style.borderColor='rgba(183,148,246,.4)'});
+});
+
+/* ========================
+   PROGRESS + NAV
+======================== */
+const prog = document.getElementById('prog');
+const nav  = document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+  nav.classList.toggle('sc',window.scrollY>60);
+});
+
+/* ========================
+   TICKER BUILD
+======================== */
+const tickerItems = [
+  'Power BI','∑ Statistics','Arabic NLP','AI Quality','SQL','∂ Calculus',
+  'Data Viz','LaTeX','Python','∫ Analysis','AI Safety','DAX','Risk Models',
+  'σ Std Dev','OCR Validation','𝔼 Probability','Financial Modeling','∇ Gradient'
+];
+const ticker = document.getElementById('ticker');
+[...tickerItems,...tickerItems].forEach(t=>{
+  const d=document.createElement('div');
+  d.className='ti';
+  const ismath = t.match(/^[∑∂∫σ𝔼∇]/);
+  d.innerHTML=`<span class="${ismath?'ti-math':''}">${t}</span><div class="ti-dot"></div>`;
+  ticker.appendChild(d);
+});
+
+/* ========================
+   PARTICLES CANVAS
+======================== */
+(function(){
+  const c=document.getElementById('c-particles');
+  const ctx=c.getContext('2d');
+  function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  const P=[];
+  const colors=['rgba(183,148,246,','rgba(56,189,248,','rgba(251,113,133,','rgba(74,222,128,','rgba(251,191,36,'];
+  for(let i=0;i<100;i++){
+    P.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
+      r:Math.random()*2+.3,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,
+      op:Math.random()*.4+.1,col:colors[Math.floor(Math.random()*colors.length)]});
+  }
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    P.forEach((p,i)=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;
+      if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.col+p.op+')';ctx.fill();
+      P.forEach((q,j)=>{
+        if(j<=i)return;
+        const dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<150){
+          ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+          ctx.strokeStyle=`rgba(183,148,246,${(1-d/150)*.08})`;ctx.lineWidth=.5;ctx.stroke();
+        }
+      });
     });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-    // Animate project cards on scroll
-    const cards = document.querySelectorAll('.fade-slide-up');
-    const observer = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+/* ========================
+   MATH CANVAS
+======================== */
+(function(){
+  const c=document.getElementById('c-math');
+  const ctx=c.getContext('2d');
+  function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+
+  const symbols=[
+    'α','β','γ','δ','ε','ζ','η','θ','λ','μ','ν','ξ','π','ρ','σ','τ','φ','χ','ψ','ω',
+    '∑','∏','∫','∂','∇','∞','∈','∉','⊂','⊃','∩','∪','∀','∃','≈','≡','≤','≥','±','√',
+    'Δx','dy/dx','f\'(x)','P(x)','E[X]','σ²','R²','β₀','β₁','xᵢ','wᵢ','∂L','∇J',
+    'SELECT','GROUP BY','JOIN','WHERE','FROM','SUM()','COUNT()','AVG()','MAX()',
+    'df[x]','pd.read','sklearn','import','return','def fit','lambda','.mean()','.std()',
+    'α','β','σ','μ','∑','∫','∂','∇','ŷ'
+  ];
+
+  const cols=Math.floor(window.innerWidth/30);
+  const drops=Array.from({length:cols},()=>Math.random()*-300);
+  const chars=drops.map(()=>symbols[Math.floor(Math.random()*symbols.length)]);
+  const speed=drops.map(()=>Math.random()*.3+.08);
+  const colors=['#b794f6','#38bdf8','#fb7185','#4ade80','#fbbf24','#d8b4fe'];
+
+  function draw(){
+    ctx.fillStyle='rgba(10,10,18,.03)';
+    ctx.fillRect(0,0,c.width,c.height);
+    drops.forEach((y,i)=>{
+      ctx.font=`${Math.random()>.97?'600 ':''}${Math.floor(Math.random()*.5+10)}px "JetBrains Mono",monospace`;
+      ctx.fillStyle=colors[i%colors.length];
+      ctx.fillText(chars[i],i*30,y*16);
+      drops[i]+=speed[i];
+      if(drops[i]*16>c.height+200&&Math.random()>.97){
+        drops[i]=Math.random()*-30;
+        chars[i]=symbols[Math.floor(Math.random()*symbols.length)];
+      }
+      if(Math.random()>.997) chars[i]=symbols[Math.floor(Math.random()*symbols.length)];
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ========================
+   CIRCUIT CANVAS
+======================== */
+(function(){
+  const c=document.getElementById('c-circuit');
+  const ctx=c.getContext('2d');
+  function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+
+  function drawCircuit(){
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.strokeStyle='rgba(183,148,246,0.5)';
+    ctx.lineWidth=1;
+    const gs=70;
+    for(let x=0;x<c.width;x+=gs){
+      for(let y=0;y<c.height;y+=gs){
+        if(Math.random()>.6){
+          ctx.beginPath();
+          ctx.moveTo(x,y);
+          const dir=Math.floor(Math.random()*4);
+          if(dir===0){ctx.lineTo(x+gs,y)}
+          else if(dir===1){ctx.lineTo(x,y+gs)}
+          else if(dir===2){ctx.lineTo(x+gs,y);ctx.moveTo(x+gs,y);ctx.lineTo(x+gs,y+gs)}
+          else{ctx.lineTo(x,y+gs);ctx.moveTo(x,y+gs);ctx.lineTo(x+gs,y+gs)}
+          ctx.stroke();
+          if(Math.random()>.75){
+            ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);
+            ctx.fillStyle='rgba(56,189,248,0.35)';ctx.fill();
           }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    cards.forEach(card => observer.observe(card));
-  </script>
+        }
+      }
+    }
+  }
+  drawCircuit();
+  let sig={x:0,y:100,tx:window.innerWidth,ty:300};
+  function animSig(){
+    ctx.clearRect(0,0,c.width,c.height);
+    drawCircuit();
+    const t=Date.now()*0.0004;
+    const sx=(Math.sin(t*0.6)+1)/2*c.width;
+    const sy=(Math.sin(t*1.1)+1)/2*c.height;
+    ctx.beginPath();ctx.arc(sx,sy,5,0,Math.PI*2);
+    ctx.fillStyle='rgba(56,189,248,0.8)';ctx.fill();
+    ctx.beginPath();ctx.arc(sx,sy,14,0,Math.PI*2);
+    ctx.fillStyle='rgba(56,189,248,0.08)';ctx.fill();
+    setTimeout(()=>{requestAnimationFrame(animSig)},20);
+  }
+  setInterval(drawCircuit,10000);
+  animSig();
+})();
 
+/* ========================
+   CONSTELLATION CANVAS
+======================== */
+(function(){
+  const c=document.getElementById('c-constellation');
+  const ctx=c.getContext('2d');
+  function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+
+  const stars=[];
+  for(let i=0;i<60;i++){
+    stars.push({
+      x:Math.random()*c.width,
+      y:Math.random()*c.height,
+      r:Math.random()*1.5+.5,
+      vx:(Math.random()-.5)*.1,
+      vy:(Math.random()-.5)*.1
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach((s,i)=>{
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<0||s.x>c.width)s.vx*=-1;
+      if(s.y<0||s.y>c.height)s.vy*=-1;
+
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(183,148,246,.4)';
+      ctx.fill();
+
+      stars.forEach((s2,j)=>{
+        if(j<=i)return;
+        const dx=s.x-s2.x,dy=s.y-s2.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<200){
+          ctx.beginPath();
+          ctx.moveTo(s.x,s.y);
+          ctx.lineTo(s2.x,s2.y);
+          ctx.strokeStyle=`rgba(183,148,246,${(1-d/200)*.15})`;
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
+      });
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ========================
+   SCROLL REVEAL
+======================== */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')});
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ========================
+   SMOOTH SCROLL
+======================== */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+/* ========================
+   PARALLAX EFFECTS
+======================== */
+document.addEventListener('mousemove',e=>{
+  const x=(e.clientX/window.innerWidth-.5);
+  const y=(e.clientY/window.innerHeight-.5);
+
+  document.querySelectorAll('.blob').forEach((b,i)=>{
+    const f=(i+1)*8;
+    b.style.transform=`translate(${x*f}px,${y*f}px)`;
+  });
+  document.querySelectorAll('.ring').forEach((r,i)=>{
+    const f=(i+1)*3;
+    r.style.marginLeft=`${x*f}px`;
+    r.style.marginTop=`${y*f}px`;
+  });
+  document.querySelectorAll('.box, .box-filled').forEach((b,i)=>{
+    const f=(i+1)*5;
+    b.style.transform=`translate(${x*f}px,${y*f}px) rotate(${i*15}deg)`;
+  });
+});
+</script>
 </body>
 </html>
