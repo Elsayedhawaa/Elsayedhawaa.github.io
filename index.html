@@ -2997,7 +2997,37 @@ function initCharts(view) {
 }
 
 // Cursor & Spotlight
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { 
+    // Fluid Background Mouse Movement
+  const fluidBg = document.getElementById('fluidBg');
+  let mouseX = 0;
+  let mouseY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 100; // -50 to 50
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 100;
+  });
+  
+  // Smooth animation loop for mouse follow
+  function animateFluid() {
+    currentX += (mouseX - currentX) * 0.05;
+    currentY += (mouseY - currentY) * 0.05;
+    
+    if (fluidBg) {
+      const blobs = fluidBg.querySelectorAll('.fluid-blob');
+      blobs.forEach((blob, index) => {
+        const speed = (index + 1) * 0.3;
+        const x = currentX * speed;
+        const y = currentY * speed;
+        // Apply offset to the existing animation
+        blob.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    }
+    requestAnimationFrame(animateFluid);
+  }
+  animateFluid();
   const cur = document.getElementById('cur');
   const curR = document.getElementById('cur-r');
   const spotlight = document.getElementById('spotlight');
