@@ -2398,3 +2398,525 @@
       </div>
     </div>
   </div>
+  <script>
+// View Switching System
+function showView(viewName) {
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.remove('active');
+    v.style.display = 'none';
+  });
+  
+  if (viewName === 'home') {
+    document.getElementById('home-view').style.display = 'block';
+    setTimeout(() => document.getElementById('home-view').classList.add('active'), 50);
+    document.getElementById('main-nav').style.display = 'flex';
+    document.getElementById('back-btn').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  } else {
+    const target = document.getElementById(viewName + '-dashboard');
+    if (target) {
+      target.style.display = 'block';
+      setTimeout(() => target.classList.add('active'), 50);
+      document.getElementById('main-nav').style.display = 'none';
+      document.getElementById('back-btn').style.display = 'block';
+      document.body.style.overflow = 'auto';
+      window.scrollTo(0,0);
+      initCharts(viewName);
+    }
+  }
+}
+
+function scrollToSection(id) {
+  const homeView = document.getElementById('home-view');
+  if (!homeView.classList.contains('active')) {
+    showView('home');
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({behavior: 'smooth'});
+    }, 100);
+  } else {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior: 'smooth'});
+  }
+}
+
+// Chart Management
+const chartInstances = {};
+
+function initCharts(view) {
+  const commonOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { 
+        labels: { 
+          color: '#c0c0e0', 
+          font: { family: 'DM Sans', size: 11 } 
+        } 
+      }
+    },
+    scales: {
+      x: { 
+        ticks: { color: '#8a8ab8', font: { family: 'DM Sans' } }, 
+        grid: { color: 'rgba(255,255,255,0.03)' } 
+      },
+      y: { 
+        ticks: { color: '#8a8ab8', font: { family: 'DM Sans' } }, 
+        grid: { color: 'rgba(255,255,255,0.03)' } 
+      }
+    }
+  };
+
+  const initIfExists = (id, type, data, options = {}) => {
+    const ctx = document.getElementById(id);
+    if (!ctx || chartInstances[id]) return;
+    try {
+      chartInstances[id] = new Chart(ctx, { type, data, options: { ...commonOptions, ...options } });
+    } catch(e) { console.error('Chart error:', id, e); }
+  };
+
+  if (view === 'loan' && !chartInstances['loanMonthChart']) {
+    initIfExists('loanMonthChart', 'line', {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Volume ($M)',
+        data: [32, 35, 38, 36, 42, 45, 48, 52, 49, 46, 41, 38],
+        borderColor: '#b794f6',
+        backgroundColor: 'rgba(183,148,246,0.1)',
+        fill: true,
+        tension: 0.4
+      }]
+    });
+    
+    initIfExists('loanPurposeChart', 'doughnut', {
+      labels: ['Debt Consolidation', 'Credit Card', 'Home Improvement', 'Small Business', 'Medical', 'Other'],
+      datasets: [{
+        data: [47, 18, 12, 8, 9, 6],
+        backgroundColor: ['#b794f6', '#38bdf8', '#fb7185', '#fbbf24', '#4ade80', '#818cf8']
+      }]
+    }, { cutout: '60%' });
+
+    initIfExists('loanRateChart', 'bar', {
+      labels: ['A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'G1', 'G2'],
+      datasets: [{
+        label: 'Interest Rate %',
+        data: [7.2, 7.8, 8.4, 9.1, 9.8, 10.5, 11.2, 12.1, 13.0, 14.2, 15.5, 17.0, 18.5, 20.2, 22.8],
+        backgroundColor: (ctx) => {
+          const v = ctx.raw;
+          return v > 15 ? '#fb7185' : v > 10 ? '#fbbf24' : '#4ade80';
+        }
+      }]
+    });
+
+    initIfExists('loanStatusChart', 'bar', {
+      labels: ['< $50K', '$50-100K', '$100-150K', '$150K+'],
+      datasets: [
+        { label: 'Fully Paid', data: [85, 78, 72, 68], backgroundColor: '#4ade80' },
+        { label: 'Charged Off', data: [8, 12, 15, 18], backgroundColor: '#fb7185' },
+        { label: 'Current', data: [7, 10, 13, 14], backgroundColor: '#38bdf8' }
+      ]
+    });
+  }
+
+  if (view === 'blinkit' && !chartInstances['blinkitOutletChart']) {
+    initIfExists('blinkitOutletChart', 'bar', {
+      labels: ['Supermarket Type 1', 'Grocery Store', 'Supermarket Type 2', 'Supermarket Type 3'],
+      datasets: [{
+        label: 'Revenue ($K)',
+        data: [787.55, 151.94, 131.48, 130.71],
+        backgroundColor: ['#ff6b35', '#fbbf24', '#38bdf8', '#4ade80']
+      }]
+    });
+
+    initIfExists('blinkitCategoryChart', 'pie', {
+      labels: ['Fruits & Veg', 'Snack Foods', 'Household', 'Frozen', 'Dairy', 'Beverages'],
+      datasets: [{
+        data: [28, 22, 18, 12, 11, 9],
+        backgroundColor: ['#ff6b35', '#fbbf24', '#38bdf8', '#4ade80', '#b794f6', '#fb7185']
+      }]
+    });
+
+    initIfExists('blinkitTierChart', 'bar', {
+      labels: ['Tier 1 (Metro)', 'Tier 2 (Urban)', 'Tier 3 (Semi-Urban)'],
+      datasets: [{
+        label: 'Sales Performance',
+        data: [100, 85, 72],
+        backgroundColor: ['#ff6b35', '#fbbf24', '#38bdf8']
+      }]
+    });
+
+    initIfExists('blinkitTrendChart', 'line', {
+      labels: ['2012', '2014', '2016', '2018', '2020', '2022'],
+      datasets: [{
+        label: 'Annual Sales ($M)',
+        data: [0.4, 0.6, 0.8, 0.95, 1.1, 1.2],
+        borderColor: '#ff6b35',
+        backgroundColor: 'rgba(255,107,53,0.1)',
+        fill: true,
+        tension: 0.3
+      }]
+    });
+  }
+
+  if (view === 'uber' && !chartInstances['uberHourChart']) {
+    initIfExists('uberHourChart', 'line', {
+      labels: Array.from({length: 24}, (_, i) => i + ':00'),
+      datasets: [{
+        label: 'Ride Demand',
+        data: [1200, 800, 500, 300, 400, 1200, 3500, 5800, 4200, 3100, 2900, 3200, 3400, 3100, 3300, 3600, 4200, 5800, 7200, 6500, 4800, 3600, 2800, 1800],
+        borderColor: '#4ade80',
+        backgroundColor: 'rgba(74,222,128,0.1)',
+        fill: true,
+        tension: 0.4
+      }]
+    });
+
+    initIfExists('uberVehicleChart', 'doughnut', {
+      labels: ['UberX', 'UberXL', 'Black', 'Pool', 'WAV'],
+      datasets: [{
+        data: [62, 18, 12, 6, 2],
+        backgroundColor: ['#4ade80', '#38bdf8', '#1e1e38', '#fbbf24', '#fb7185']
+      }]
+    }, { cutout: '50%' });
+
+    initIfExists('uberZoneChart', 'bar', {
+      labels: ['Downtown', 'Airport', 'Suburbs', 'University', 'Business Dist'],
+      datasets: [{
+        label: 'Revenue ($K)',
+        data: [1250, 980, 420, 380, 890],
+        backgroundColor: '#38bdf8'
+      }]
+    });
+
+    initIfExists('uberCancelChart', 'bar', {
+      labels: ['Driver Cancel', 'Rider No-Show', 'Destination Change', 'Payment Issue', 'Other'],
+      datasets: [{
+        label: 'Cancellation %',
+        data: [3.2, 2.8, 1.4, 0.6, 0.4],
+        backgroundColor: '#fb7185'
+      }]
+    });
+  }
+
+  if (view === 'hotel' && !chartInstances['hotelSeasonChart']) {
+    initIfExists('hotelSeasonChart', 'line', {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [
+        { label: 'Occupancy %', data: [72, 75, 78, 82, 86, 89, 92, 94, 88, 84, 78, 74], borderColor: '#c9a961', yAxisID: 'y' },
+        { label: 'ADR ($)', data: [185, 190, 210, 235, 255, 275, 285, 290, 260, 240, 205, 195], borderColor: '#38bdf8', yAxisID: 'y1' }
+      ]
+    }, {
+      scales: {
+        y: { type: 'linear', display: true, position: 'left', ticks: { color: '#c9a961' } },
+        y1: { type: 'linear', display: true, position: 'right', ticks: { color: '#38bdf8' }, grid: { drawOnChartArea: false } },
+        x: { ticks: { color: '#8a8ab8' }, grid: { color: 'rgba(255,255,255,0.03)' } }
+      }
+    });
+
+    initIfExists('hotelRevenueChart', 'doughnut', {
+      labels: ['Rooms', 'F&B', 'Spa', 'Parking', 'Other'],
+      datasets: [{
+        data: [68, 18, 8, 4, 2],
+        backgroundColor: ['#c9a961', '#fb923c', '#38bdf8', '#4ade80', '#b794f6']
+      }]
+    });
+
+    initIfExists('hotelSatisfactionChart', 'radar', {
+      labels: ['Cleanliness', 'Service', 'Amenities', 'Location', 'Value', 'Sleep Quality'],
+      datasets: [{
+        label: 'Guest Rating',
+        data: [4.7, 4.6, 4.3, 4.8, 4.2, 4.5],
+        borderColor: '#c9a961',
+        backgroundColor: 'rgba(201,169,97,0.2)'
+      }]
+    }, {
+      scales: {
+        r: {
+          angleLines: { color: 'rgba(255,255,255,0.1)' },
+          grid: { color: 'rgba(255,255,255,0.1)' },
+          pointLabels: { color: '#c0c0e0', font: { family: 'DM Sans' } },
+          ticks: { backdropColor: 'transparent', color: '#8a8ab8' }
+        }
+      }
+    });
+  }
+
+  if (view === 'covid' && !chartInstances['covidContinentChart']) {
+    initIfExists('covidContinentChart', 'bar', {
+      labels: ['Europe', 'N. America', 'Asia', 'S. America', 'Africa', 'Oceania'],
+      datasets: [{
+        label: 'Deaths (M)',
+        data: [2.0, 1.6, 1.6, 0.7, 0.26, 0.02],
+        backgroundColor: ['#fb7185', '#f43f5e', '#fb923c', '#fbbf24', '#38bdf8', '#4ade80']
+      }]
+    });
+
+    initIfExists('covidVaxChart', 'doughnut', {
+      labels: ['Fully Vaccinated', 'Partially', 'Not Vaccinated'],
+      datasets: [{
+        data: [70.59, 12.3, 17.11],
+        backgroundColor: ['#4ade80', '#fbbf24', '#fb7185']
+      }]
+    });
+
+    initIfExists('covidTrendChart', 'line', {
+      labels: ['2020', '2021', '2022', '2023', '2024'],
+      datasets: [
+        { label: 'Cases (M)', data: [80, 280, 350, 55, 11], borderColor: '#38bdf8', tension: 0.3 },
+        { label: 'Deaths (K)', data: [1800, 3200, 1200, 280, 45], borderColor: '#fb7185', tension: 0.3 }
+      ]
+    });
+
+    initIfExists('covidCFRChart', 'bar', {
+      labels: ['Europe', 'N. America', 'Asia', 'S. America', 'Africa'],
+      datasets: [{
+        label: 'Case Fatality Rate %',
+        data: [1.2, 1.1, 0.9, 1.4, 2.1],
+        backgroundColor: '#fb923c'
+      }]
+    });
+  }
+
+  if (view === 'pizza' && !chartInstances['pizzaCategoryChart']) {
+    initIfExists('pizzaCategoryChart', 'pie', {
+      labels: ['Classic', 'Veggie', 'Chicken', 'Supreme', 'Specialty'],
+      datasets: [{
+        data: [32, 24, 22, 15, 7],
+        backgroundColor: ['#ff6347', '#4ade80', '#fbbf24', '#fb7185', '#b794f6']
+      }]
+    });
+
+    initIfExists('pizzaHourChart', 'bar', {
+      labels: ['9am', '11am', '1pm', '3pm', '5pm', '7pm', '9pm', '11pm'],
+      datasets: [{
+        label: 'Orders',
+        data: [450, 1200, 2800, 950, 1800, 4200, 3800, 1500],
+        backgroundColor: (ctx) => {
+          const v = ctx.raw;
+          return v > 3000 ? '#ff6347' : v > 1500 ? '#fb923c' : '#fbbf24';
+        }
+      }]
+    });
+
+    initIfExists('pizzaSizeChart', 'doughnut', {
+      labels: ['Large', 'Medium', 'Small', 'X-Large'],
+      datasets: [{
+        data: [45, 35, 15, 5],
+        backgroundColor: ['#ff6347', '#fb923c', '#fbbf24', '#4ade80']
+      }]
+    });
+
+    initIfExists('pizzaMonthChart', 'line', {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Revenue ($K)',
+        data: [62, 58, 65, 68, 72, 75, 82, 80, 76, 74, 70, 85],
+        borderColor: '#ff6347',
+        backgroundColor: 'rgba(255,99,71,0.1)',
+        fill: true,
+        tension: 0.3
+      }]
+    });
+  }
+}
+
+// Cursor & Spotlight
+document.addEventListener('DOMContentLoaded', () => {
+  const cur = document.getElementById('cur');
+  const curR = document.getElementById('cur-r');
+  const spotlight = document.getElementById('spotlight');
+  
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', (e) => {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top = e.clientY + 'px';
+      setTimeout(() => {
+        curR.style.left = e.clientX + 'px';
+        curR.style.top = e.clientY + 'px';
+      }, 80);
+      spotlight.style.left = e.clientX + 'px';
+      spotlight.style.top = e.clientY + 'px';
+    });
+
+    document.addEventListener('mousedown', () => {
+      cur.style.transform = 'scale(0.8)';
+      curR.style.transform = 'scale(0.8)';
+    });
+
+    document.addEventListener('mouseup', () => {
+      cur.style.transform = 'scale(1)';
+      curR.style.transform = 'scale(1)';
+    });
+  } else {
+    if(cur) cur.style.display = 'none';
+    if(curR) curR.style.display = 'none';
+    if(spotlight) spotlight.style.display = 'none';
+  }
+
+  // Ticker
+  const ticker = document.getElementById('ticker');
+  if (ticker) {
+    const items = ['SQL', 'Python', 'Power BI', 'DAX', 'Pandas', 'Data Viz', 'Statistics', 'ML', 'AI Training', 'LaTeX'];
+    ticker.innerHTML = items.map(item => 
+      `<div class="ti"><div class="ti-dot"></div>${item}<span class="ti-math">//</span></div>`
+    ).join('') + items.map(item => 
+      `<div class="ti"><div class="ti-dot"></div>${item}<span class="ti-math">//</span></div>`
+    ).join('');
+  }
+
+  // Scroll Reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('on');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav & Progress
+  const nav = document.getElementById('nav');
+  const prog = document.getElementById('prog');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.classList.add('sc');
+    } else {
+      nav.classList.remove('sc');
+    }
+    
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (height > 0) {
+      prog.style.width = (winScroll / height) * 100 + '%';
+    }
+  });
+
+  // Generate dot grids
+  document.querySelectorAll('.dotgrid').forEach((grid, idx) => {
+    const count = idx === 0 ? 48 : idx === 1 ? 32 : 24;
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      grid.appendChild(dot);
+    }
+  });
+
+  // Canvas Animations
+  initParticles();
+  initMathCanvas();
+});
+
+// Particle System
+function initParticles() {
+  const canvas = document.getElementById('c-particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  const resize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 2 + 1,
+      opacity: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    frame++;
+    
+    particles.forEach((p, i) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(183,148,246,${p.opacity})`;
+      ctx.fill();
+
+      // Connect nearby particles
+      if (i % 5 === 0 && frame % 2 === 0) {
+        particles.slice(i + 1, i + 4).forEach(p2 => {
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(183,148,246,${0.1 * (1 - dist/100)})`;
+            ctx.stroke();
+          }
+        });
+      }
+    });
+    
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// Math Canvas
+function initMathCanvas() {
+  const canvas = document.getElementById('c-math');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  const resize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const symbols = ['∑', '∫', '∂', 'π', '√', 'α', 'β', 'σ', 'μ', '∆', '∞', '≈'];
+  const objects = [];
+  
+  for (let i = 0; i < 15; i++) {
+    objects.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      symbol: symbols[Math.floor(Math.random() * symbols.length)],
+      size: Math.random() * 14 + 12,
+      speedY: Math.random() * 0.2 - 0.1,
+      opacity: Math.random() * 0.15 + 0.05
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    objects.forEach(obj => {
+      obj.y += obj.speedY;
+      if (obj.y < -50) obj.y = canvas.height + 50;
+      if (obj.y > canvas.height + 50) obj.y = -50;
+      
+      ctx.font = `${obj.size}px JetBrains Mono`;
+      ctx.fillStyle = `rgba(183,148,246,${obj.opacity})`;
+      ctx.fillText(obj.symbol, obj.x, obj.y);
+    });
+    
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+</script>
+</body>
+</html>
